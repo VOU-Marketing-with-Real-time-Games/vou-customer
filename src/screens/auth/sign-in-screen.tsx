@@ -7,10 +7,11 @@ import { TextInput, Text, Button } from "react-native-paper";
 import { zodResolver } from "@hookform/resolvers/zod";
 import AuthLayout from "../../layouts/auth/auth-layout";
 import tw from "../../lib/tailwind";
-import { OtpScreenName, SignUpScreenName } from "./auth";
+import { SignUpScreenName } from "./auth";
 import SocialMedia from "../../components/social-media/social-media";
 import { loginSchema, LoginSchema } from "../../utils/rules";
 import HeplerTextCustom from "../../components/common/hepler-text-custom";
+import { MainNavigationName } from "../../navigation/main-navigation";
 
 type FormData = LoginSchema;
 
@@ -32,7 +33,10 @@ const SignInScreen = () => {
   });
 
   const onSubmit = async (data: FieldValues) => {
-    navigation.navigate(OtpScreenName);
+    navigation.reset({
+      index: 0,
+      routes: [{ name: MainNavigationName }],
+    });
   };
 
   return (
