@@ -1,9 +1,14 @@
 import { View } from "react-native";
 import React from "react";
 import { Button, Icon, Text, Modal, Portal } from "react-native-paper";
+import { ParamListBase, useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import tw from "../../lib/tailwind";
+import { ShakeGameScreenName } from "../../screens/game/game";
 
 const ButtonChooseGame = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+
   const [visible, setVisible] = React.useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
@@ -25,7 +30,15 @@ const ButtonChooseGame = () => {
       {/* modal */}
       <Portal>
         <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={tw`py-10 px-5 bg-white gap-4`}>
-          <Button mode="contained">Shake Game</Button>
+          <Button
+            mode="contained"
+            onPress={() => {
+              hideModal();
+              navigation.navigate(ShakeGameScreenName);
+            }}
+          >
+            Shake Game
+          </Button>
         </Modal>
       </Portal>
     </View>

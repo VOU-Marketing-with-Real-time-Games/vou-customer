@@ -13,6 +13,8 @@ import MainNavigation, { MainNavigationName } from "./main-navigation";
 import { VoucherDetailScreenName } from "../screens/voucher/voucher";
 import VoucherDetailScreen from "../screens/voucher/voucher-detail-screen";
 import Header from "../components/common/header";
+import { ShakeGameScreenName } from "../screens/game/game";
+import ShakeGameScreen from "../screens/game/shake-game-screen";
 
 const Stack = createNativeStackNavigator<NavigatorParamList>();
 
@@ -42,6 +44,14 @@ const StackNavigation = () => {
         })}
         name={VoucherDetailScreenName}
         component={VoucherDetailScreen}
+      />
+      {/* Game */}
+      <Stack.Screen
+        options={({ route }) => ({
+          header: () => <Header title="Shake Game" canGoBack />,
+        })}
+        name={ShakeGameScreenName}
+        component={ShakeGameScreen}
       />
     </Stack.Navigator>
   );
