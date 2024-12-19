@@ -15,7 +15,7 @@ const LocationNear = ({ name }: Props) => (
       source={{
         uri: "https://about.starbucks.com/uploads/2021/11/Starbucks-Virtual-Backgrounds-Holiday-Cups-2021-1024x683.jpg",
       }}
-      style={tw`w-96 h-36 rounded-t-lg`}
+      style={[tw`h-36 rounded-t-lg`, { width: width * 0.8 }]}
     />
     <View style={tw`px-5 py-2`}>
       <View style={tw`gap-2`}>

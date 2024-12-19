@@ -6,7 +6,7 @@ import { MainNavigationName } from "./main-navigation";
 import { VoucherDetailScreenName, VoucherScreenName } from "../screens/voucher/voucher";
 import { LocationScreenName } from "../screens/location/location";
 import { ProfileScreenName } from "../screens/profile/profile";
-import { ShakeGameScreenName } from "../screens/game/game";
+import { FlappyBirdGameScreenName, ShakeGameScreenName } from "../screens/game/game";
 
 export type NavigatorParamList = {
   // splash screen
@@ -34,4 +34,5 @@ export type NavigatorParamList = {
 
   // Game
   [ShakeGameScreenName]: undefined;
+  [FlappyBirdGameScreenName]: undefined;
 };

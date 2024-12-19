@@ -41,7 +41,7 @@ const LocationScreen = () => {
   });
 
   const onScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const index = Math.min(Math.round(event.nativeEvent.contentOffset.x / width), locations.length - 1);
+    const index = Math.min(Math.round(event.nativeEvent.contentOffset.x / (width * 0.8)), locations.length - 1);
     const location = locations[index];
     setSelectedLocation(location.id);
 
@@ -60,7 +60,7 @@ const LocationScreen = () => {
   const onMarkerPress = (location: ILocation, index: number) => {
     // Scroll to corresponding item
     scrollViewRef.current?.scrollTo({
-      x: index * width,
+      x: index * width * 0.8,
       animated: true,
     });
 

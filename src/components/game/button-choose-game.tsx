@@ -4,7 +4,7 @@ import { Button, Icon, Text, Modal, Portal } from "react-native-paper";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import tw from "../../lib/tailwind";
-import { ShakeGameScreenName } from "../../screens/game/game";
+import { FlappyBirdGameScreenName, ShakeGameScreenName } from "../../screens/game/game";
 
 const ButtonChooseGame = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -30,6 +30,7 @@ const ButtonChooseGame = () => {
       {/* modal */}
       <Portal>
         <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={tw`py-10 px-5 bg-white gap-4`}>
+          {/* Shake game */}
           <Button
             mode="contained"
             onPress={() => {
@@ -39,6 +40,19 @@ const ButtonChooseGame = () => {
           >
             Shake Game
           </Button>
+
+          {/* Flappy Bird Game */}
+          <Button
+            mode="contained"
+            onPress={() => {
+              hideModal();
+              navigation.navigate(FlappyBirdGameScreenName);
+            }}
+          >
+            Flappy Bird Game
+          </Button>
+
+          {/* Quiz Game */}
         </Modal>
       </Portal>
     </View>

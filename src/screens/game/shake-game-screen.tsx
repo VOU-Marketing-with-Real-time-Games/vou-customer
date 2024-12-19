@@ -1,15 +1,13 @@
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import { Text } from "react-native-paper";
 import { Accelerometer, AccelerometerMeasurement } from "expo-sensors";
 import { Subscription } from "expo-sensors/build/DeviceSensor";
 import tw from "../../lib/tailwind";
 
-const SHAKE_THRESHOLD = 2;
-const SHAKE_SLOP_TIME_MS = 500;
+const SHAKE_THRESHOLD = 4;
 const ShakeGameScreen = () => {
   const [count, setCount] = React.useState(0);
-  const [lastShakeTime, setLastShakeTime] = React.useState<Date | null>(null);
   const [subscription, setSubscription] = React.useState<Subscription | null>(null);
 
   // Detect shake by evaluating the magnitude of acceleration
@@ -18,11 +16,7 @@ const ShakeGameScreen = () => {
     const totalAcceleration = Math.sqrt(x * x + y * y + z * z);
 
     if (totalAcceleration > SHAKE_THRESHOLD) {
-      const now = new Date();
-      if (now.getTime() - (lastShakeTime?.getTime() || now.getTime()) > SHAKE_SLOP_TIME_MS) {
-        setCount((prevCount) => prevCount + 1);
-      }
-      setLastShakeTime(new Date());
+      setCount((prevCount) => prevCount + 1);
     }
   };
 
@@ -53,5 +47,3 @@ const ShakeGameScreen = () => {
   );
 };
 export default ShakeGameScreen;
-
-const styles = StyleSheet.create({});

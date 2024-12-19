@@ -13,8 +13,9 @@ import MainNavigation, { MainNavigationName } from "./main-navigation";
 import { VoucherDetailScreenName } from "../screens/voucher/voucher";
 import VoucherDetailScreen from "../screens/voucher/voucher-detail-screen";
 import Header from "../components/common/header";
-import { ShakeGameScreenName } from "../screens/game/game";
+import { FlappyBirdGameScreenName, ShakeGameScreenName } from "../screens/game/game";
 import ShakeGameScreen from "../screens/game/shake-game-screen";
+import FlappyBirdGameScreen from "../screens/game/flappy-bird-game-screen";
 
 const Stack = createNativeStackNavigator<NavigatorParamList>();
 
@@ -52,6 +53,13 @@ const StackNavigation = () => {
         })}
         name={ShakeGameScreenName}
         component={ShakeGameScreen}
+      />
+      <Stack.Screen
+        options={({ route }) => ({
+          header: () => <Header title="Flappy Bird Game" canGoBack />,
+        })}
+        name={FlappyBirdGameScreenName}
+        component={FlappyBirdGameScreen}
       />
     </Stack.Navigator>
   );
