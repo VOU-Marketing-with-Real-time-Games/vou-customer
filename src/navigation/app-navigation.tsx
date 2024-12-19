@@ -8,14 +8,14 @@ import { OtpScreenName, SignInScreenName, SignUpScreenName } from "../screens/au
 import SignInScreen from "../screens/auth/sign-in-screen";
 import SignUpScreen from "../screens/auth/sign-up-screen";
 import OtpScreen from "../screens/auth/otp-screen";
-
-export type NavigatorParamList = {
-  [SplashScreenName]: undefined;
-  [OnboardingScreenName]: undefined;
-  [SignInScreenName]: undefined;
-  [SignUpScreenName]: undefined;
-  [OtpScreenName]: undefined;
-};
+import { NavigatorParamList } from "./navigation";
+import MainNavigation, { MainNavigationName } from "./main-navigation";
+import { VoucherDetailScreenName } from "../screens/voucher/voucher";
+import VoucherDetailScreen from "../screens/voucher/voucher-detail-screen";
+import Header from "../components/common/header";
+import { FlappyBirdGameScreenName, ShakeGameScreenName } from "../screens/game/game";
+import ShakeGameScreen from "../screens/game/shake-game-screen";
+import FlappyBirdGameScreen from "../screens/game/flappy-bird-game-screen";
 
 const Stack = createNativeStackNavigator<NavigatorParamList>();
 
@@ -36,6 +36,31 @@ const StackNavigation = () => {
       <Stack.Screen options={options} name={SignInScreenName} component={SignInScreen} />
       <Stack.Screen options={options} name={SignUpScreenName} component={SignUpScreen} />
       <Stack.Screen options={options} name={OtpScreenName} component={OtpScreen} />
+
+      {/* Home */}
+      <Stack.Screen options={options} name={MainNavigationName} component={MainNavigation} />
+      <Stack.Screen
+        options={({ route }) => ({
+          header: () => <Header title={route.params.header} canGoBack />,
+        })}
+        name={VoucherDetailScreenName}
+        component={VoucherDetailScreen}
+      />
+      {/* Game */}
+      <Stack.Screen
+        options={({ route }) => ({
+          header: () => <Header title="Shake Game" canGoBack />,
+        })}
+        name={ShakeGameScreenName}
+        component={ShakeGameScreen}
+      />
+      <Stack.Screen
+        options={({ route }) => ({
+          header: () => <Header title="Flappy Bird Game" canGoBack />,
+        })}
+        name={FlappyBirdGameScreenName}
+        component={FlappyBirdGameScreen}
+      />
     </Stack.Navigator>
   );
 };

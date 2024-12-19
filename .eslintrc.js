@@ -18,6 +18,9 @@ module.exports = {
   rules: {
     "react-hooks/rules-of-hooks": "error",
     "global-require": 0,
+    "import/no-cycle": 0,
+    "no-param-reassign": 0,
+    "import/no-unresolved": ["error", { ignore: ["^@env$"] }],
     // "jsx-props-no-spreading": 0,
     // '@typescript-eslint/indent': 'off',
     // 'react/prop-types': 'off',
