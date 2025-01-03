@@ -1,4 +1,4 @@
-import { ImageBackground } from "react-native";
+import { ImageBackground, View } from "react-native";
 import React from "react";
 
 import BACKGROUND from "../../../assets/images/game/flappy-bird/background.png";

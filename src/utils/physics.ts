@@ -3,11 +3,13 @@ import Matter from "matter-js";
 
 import { getPipeSizePosPair } from "./random";
 
-const windowHeight = Dimensions.get("window").height;
 const windowWidth = Dimensions.get("window").width;
 
 export const Physics = (entities, { touches, time, dispatch }) => {
   const { engine } = entities.physics;
+
+  // Lấy đối tượng Bird
+  const bird = entities.Bird.body;
 
   touches
     .filter((t) => t.type === "press")
@@ -19,18 +21,29 @@ export const Physics = (entities, { touches, time, dispatch }) => {
     });
 
   for (let index = 1; index <= 2; index += 1) {
-    if (entities[`ObstacleTop${index}`].body.bounds.max.x <= 0) {
+    const obstacleTop = entities[`ObstacleTop${index}`].body;
+    const obstacleBottom = entities[`ObstacleBottom${index}`].body;
+
+    if (obstacleTop.bounds.max.x <= 0) {
       const pipeSizePos = getPipeSizePosPair(windowWidth * 0.9);
 
-      Matter.Body.setPosition(entities[`ObstacleTop${index}`].body, pipeSizePos.pipeTop.pos);
-      Matter.Body.setPosition(entities[`ObstacleBottom${index}`].body, pipeSizePos.pipeBottom.pos);
+      Matter.Body.setPosition(obstacleTop, pipeSizePos.pipeTop.pos);
+      Matter.Body.setPosition(obstacleBottom, pipeSizePos.pipeBottom.pos);
+
+      obstacleTop.passed = false;
     }
 
-    Matter.Body.translate(entities[`ObstacleTop${index}`].body, { x: -3, y: 0 });
-    Matter.Body.translate(entities[`ObstacleBottom${index}`].body, {
+    Matter.Body.translate(obstacleTop, { x: -3, y: 0 });
+    Matter.Body.translate(obstacleBottom, {
       x: -3,
       y: 0,
     });
+
+    if (!obstacleTop.passed && bird.position.x > obstacleTop.position.x) {
+      obstacleTop.passed = true; // Đánh dấu cột đã được vượt qua
+      entities.score += 1; // Tăng điểm
+      dispatch({ type: "increase_score" }); // Gửi sự kiện tăng điểm
+    }
   }
 
   Matter.Engine.update(engine, time.delta);

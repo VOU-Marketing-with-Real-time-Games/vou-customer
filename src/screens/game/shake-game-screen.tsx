@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { Image, View } from "react-native";
 import React from "react";
 import { Text } from "react-native-paper";
 import { Accelerometer, AccelerometerMeasurement } from "expo-sensors";
@@ -41,8 +41,14 @@ const ShakeGameScreen = () => {
   }, []);
 
   return (
-    <View style={tw`mt-5`}>
-      <Text variant="displayLarge">Shake: {count}</Text>
+    <View style={tw`flex-1 justify-center items-center gap-10`}>
+      <Text variant="titleLarge">Shake your phone to receive a gift.</Text>
+      <Image
+        source={require("../../../assets/images/game/shake/shake_phone.png")}
+        alt="Shake phone"
+        style={tw`w-44 h-44`}
+      />
+      <Text variant="displayLarge">Score: {count}</Text>
     </View>
   );
 };
