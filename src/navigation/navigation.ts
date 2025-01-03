@@ -7,6 +7,7 @@ import { VoucherDetailScreenName, VoucherScreenName } from "../screens/voucher/v
 import { LocationScreenName } from "../screens/location/location";
 import { ProfileScreenName } from "../screens/profile/profile";
 import { FlappyBirdGameScreenName, QuizGameScreenName, ShakeGameScreenName } from "../screens/game/game";
+import { VoucherGiftScreenName } from "../screens/gift/gift";
 
 export type NavigatorParamList = {
   // splash screen
@@ -36,4 +37,6 @@ export type NavigatorParamList = {
   [ShakeGameScreenName]: undefined;
   [FlappyBirdGameScreenName]: undefined;
   [QuizGameScreenName]: undefined;
+  // Gift v1/quizz-game
+  [VoucherGiftScreenName]: undefined;
 };

@@ -10,5 +10,17 @@
     "question": "What is the capital of England?",
     "options": ["London", "New York", "Paris", "Dublin"],
     "answer": 0
+  },
+  {
+    "id": 3,
+    "question": "What is the capital of Ireland?",
+    "options": ["London", "New York", "Paris", "Dublin"],
+    "answer": 3
+  },
+  {
+    "id": 4,
+    "question": "What is the capital of USA?",
+    "options": ["London", "New York", "Paris", "Dublin"],
+    "answer": 1
   }
 ]

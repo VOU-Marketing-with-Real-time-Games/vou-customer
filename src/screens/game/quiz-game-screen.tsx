@@ -8,6 +8,7 @@ import tw from "../../lib/tailwind";
 import SingleQuiz from "../../components/game/quiz/single-quiz";
 import MainLayout from "../../layouts/main/main-layout";
 import question from "../../../mock/quiz.json";
+import { VoucherGiftScreenName } from "../gift/gift";
 
 const QuizGameScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -53,10 +54,26 @@ const QuizGameScreen = () => {
               </Text>
             </View>
             <View style={tw`gap-3`}>
-              <Button mode="contained" style={tw`py-0.5`} labelStyle={tw`text-xl`}>
+              <Button
+                mode="contained"
+                style={tw`py-0.5`}
+                labelStyle={tw`text-xl`}
+                onPress={() => {
+                  setVisible(false);
+                  navigation.navigate(VoucherGiftScreenName);
+                }}
+              >
                 Voucher
               </Button>
-              <Button mode="contained" style={tw`py-0.5`} labelStyle={tw`text-xl`} onPress={() => navigation.goBack()}>
+              <Button
+                mode="contained"
+                style={tw`py-0.5`}
+                labelStyle={tw`text-xl`}
+                onPress={() => {
+                  setVisible(false);
+                  navigation.goBack();
+                }}
+              >
                 Return
               </Button>
             </View>

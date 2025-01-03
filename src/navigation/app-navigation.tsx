@@ -17,6 +17,8 @@ import { FlappyBirdGameScreenName, QuizGameScreenName, ShakeGameScreenName } fro
 import ShakeGameScreen from "../screens/game/shake-game-screen";
 import FlappyBirdGameScreen from "../screens/game/flappy-bird-game-screen";
 import QuizGameScreen from "../screens/game/quiz-game-screen";
+import { VoucherGiftScreenName } from "../screens/gift/gift";
+import VoucherGiftScreen from "../screens/gift/voucher-gift-screen";
 
 const Stack = createNativeStackNavigator<NavigatorParamList>();
 
@@ -69,6 +71,8 @@ const StackNavigation = () => {
         name={QuizGameScreenName}
         component={QuizGameScreen}
       />
+      {/* Gift */}
+      <Stack.Screen options={options} name={VoucherGiftScreenName} component={VoucherGiftScreen} />
     </Stack.Navigator>
   );
 };
