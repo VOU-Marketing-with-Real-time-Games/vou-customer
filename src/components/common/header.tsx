@@ -15,7 +15,6 @@ const Header = ({ title, canGoBack = true }: Props) => {
     <Appbar.Header>
       {canGoBack && <Appbar.BackAction onPress={() => navigation.goBack()} />}
       <Appbar.Content title={title} />
-      <Text>Header</Text>
     </Appbar.Header>
   );
 };

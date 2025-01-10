@@ -8,6 +8,8 @@ import { LocationScreenName } from "../screens/location/location";
 import { ProfileScreenName } from "../screens/profile/profile";
 import { FlappyBirdGameScreenName, QuizGameScreenName, ShakeGameScreenName } from "../screens/game/game";
 import { VoucherGiftScreenName } from "../screens/gift/gift";
+import { campaignsScreenName } from "../screens/campaign/campain";
+import { ICampaign } from "../types/campaign";
 
 export type NavigatorParamList = {
   // splash screen
@@ -29,8 +31,9 @@ export type NavigatorParamList = {
   [ProfileScreenName]: undefined;
   [VoucherDetailScreenName]: {
     header: string;
-    // data: {
-    // };
+    data: {
+      campaign: ICampaign;
+    };
   };
 
   // Game
@@ -39,4 +42,6 @@ export type NavigatorParamList = {
   [QuizGameScreenName]: undefined;
   // Gift v1/quizz-game
   [VoucherGiftScreenName]: undefined;
+  // Campaign
+  [campaignsScreenName]: undefined;
 };

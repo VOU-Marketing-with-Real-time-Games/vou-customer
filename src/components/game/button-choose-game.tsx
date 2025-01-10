@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { TouchableOpacity, View, Image } from "react-native";
 import React from "react";
 import { Button, Icon, Text, Modal, Portal } from "react-native-paper";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
@@ -31,37 +31,52 @@ const ButtonChooseGame = () => {
       <Portal>
         <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={tw`py-10 px-5 bg-white gap-4`}>
           {/* Shake game */}
-          <Button
-            mode="contained"
+          <TouchableOpacity
             onPress={() => {
               hideModal();
               navigation.navigate(ShakeGameScreenName);
             }}
           >
-            Shake Game
-          </Button>
+            <Image
+              source={require("../../../assets/images/game/shake.png")}
+              width={250}
+              height={80}
+              style={[tw`h-22 w-full rounded-xl`]}
+              alt="Quiz Game Image"
+            />
+          </TouchableOpacity>
 
           {/* Flappy Bird Game */}
-          <Button
-            mode="contained"
+          <TouchableOpacity
             onPress={() => {
               hideModal();
               navigation.navigate(FlappyBirdGameScreenName);
             }}
           >
-            Flappy Bird Game
-          </Button>
+            <Image
+              source={require("../../../assets/images/game/flappy-bird.jpg")}
+              width={250}
+              height={80}
+              style={tw`h-22 w-full rounded-xl`}
+              alt="Flappy Bird Image"
+            />
+          </TouchableOpacity>
 
           {/* Quiz Game */}
-          <Button
-            mode="contained"
+          <TouchableOpacity
             onPress={() => {
               hideModal();
               navigation.navigate(QuizGameScreenName);
             }}
           >
-            Quiz Game
-          </Button>
+            <Image
+              source={require("../../../assets/images/game/quiz.jpg")}
+              width={250}
+              height={80}
+              style={tw`h-22 w-full rounded-xl`}
+              alt="Quiz Game Image"
+            />
+          </TouchableOpacity>
         </Modal>
       </Portal>
     </View>

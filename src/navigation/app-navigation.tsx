@@ -19,6 +19,8 @@ import FlappyBirdGameScreen from "../screens/game/flappy-bird-game-screen";
 import QuizGameScreen from "../screens/game/quiz-game-screen";
 import { VoucherGiftScreenName } from "../screens/gift/gift";
 import VoucherGiftScreen from "../screens/gift/voucher-gift-screen";
+import CampaignsScreen from "../screens/campaign/campaigns-screen";
+import { campaignsScreenName } from "../screens/campaign/campain";
 
 const Stack = createNativeStackNavigator<NavigatorParamList>();
 
@@ -73,6 +75,14 @@ const StackNavigation = () => {
       />
       {/* Gift */}
       <Stack.Screen options={options} name={VoucherGiftScreenName} component={VoucherGiftScreen} />
+      {/* Campaign */}
+      <Stack.Screen
+        options={({ route }) => ({
+          header: () => <Header title="Campaigns" canGoBack />,
+        })}
+        name={campaignsScreenName}
+        component={CampaignsScreen}
+      />
     </Stack.Navigator>
   );
 };

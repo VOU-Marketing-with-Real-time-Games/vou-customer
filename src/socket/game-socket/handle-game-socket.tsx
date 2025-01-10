@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from "react";
 import { WEBSOCKET_URL, URL_QUIZ } from "@env";
 import { IAnswerSocketDone, IConnectQuizSocket, IQuizRecevie } from "../../types/socket";
