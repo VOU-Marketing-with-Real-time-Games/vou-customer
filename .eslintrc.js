@@ -21,6 +21,7 @@ module.exports = {
     "import/no-cycle": 0,
     "no-param-reassign": 0,
     "import/no-unresolved": ["error", { ignore: ["^@env$"] }],
+    "no-nested-ternary": 0,
     // "jsx-props-no-spreading": 0,
     // '@typescript-eslint/indent': 'off',
     // 'react/prop-types': 'off',

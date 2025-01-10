@@ -1,19 +1,22 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { Text } from "react-native-paper";
-import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import tw from "../../../lib/tailwind";
+import { IQuizRecevie } from "../../../types/socket";
+import { convertAnswerCharToInt, convertAnswerIntToChar } from "../../../utils/quiz";
+import TimerHandle from "../timer/timer-handle";
+import quizApi from "../../../api/quiz.api";
 
 type Props = {
   questionCount: number;
-  question: string;
-  options: string[];
+  question: IQuizRecevie;
   duration: number;
   maxQuestions: number;
-  answer: number;
+  isEndGame: boolean;
   setScore: React.Dispatch<React.SetStateAction<number>>;
   setIsEndGame: React.Dispatch<React.SetStateAction<boolean>>;
   setCurrentQuestion: React.Dispatch<React.SetStateAction<number>>;
+  socketSendAnswerComplete: () => void;
 };
 
 const styles = StyleSheet.create({
@@ -59,6 +62,7 @@ const GroupAnswer = ({ options, setSelectedAnswer, selectedAnswer, answer, showA
   <View style={tw`flex-col gap-4 mt-8 w-full px-1`}>
     {options.map((option, index) => (
       <TouchableOpacity
+        key={`${option}-${index + 1}`}
         style={[
           tw`px-5 py-3 rounded-2xl w-full flex-row items-center justify-between gap-2`,
           styles.singleAnswer,
@@ -67,7 +71,6 @@ const GroupAnswer = ({ options, setSelectedAnswer, selectedAnswer, answer, showA
           showAnswer && answer === index && styles.trueAnswer,
           showAnswer && answer !== index && selectedAnswer === index && styles.wrongAnswer,
         ]}
-        key={option}
         onPress={() => setSelectedAnswer(index)}
         disabled={selectedAnswer !== -1}
       >
@@ -85,16 +88,47 @@ const GroupAnswer = ({ options, setSelectedAnswer, selectedAnswer, answer, showA
 const SingleQuiz = ({
   questionCount,
   question,
-  options,
   setCurrentQuestion,
   maxQuestions,
-  answer,
+  isEndGame,
   setIsEndGame,
   setScore,
+  socketSendAnswerComplete,
   duration = 10,
 }: Props) => {
   const [selectedAnswer, setSelectedAnswer] = React.useState<number>(-1);
   const [showAnswer, setShowAnswer] = React.useState(false);
+
+  const handleTimeOut = async () => {
+    const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+    // Khi hết thời gian đếm ngược
+    // chưa chọn câu trả lời => đặt thành không chọn trong 4 đáp án
+    if (selectedAnswer === -1) setSelectedAnswer(4);
+    // gửi trả lời của user về server
+    await quizApi.setUserAnswer({
+      userId: 2,
+      questionId: question.id,
+      answer: convertAnswerIntToChar(selectedAnswer),
+      answerTime: 10,
+    });
+    // gửi xác nhận user này đã trả lời xong
+    socketSendAnswerComplete();
+    // hiển thị đáp án đúng
+    setShowAnswer(true);
+    // tăng điểm nếu trả lời đúng
+    if (selectedAnswer === convertAnswerCharToInt(question.answer)) setScore((prev) => prev + 1);
+    // dừng 2s để show kết quả
+    await delay(2000);
+    // chuyển câu hỏi tiếp theo (nếu còn)
+    if (questionCount < maxQuestions) {
+      setShowAnswer(false);
+      setCurrentQuestion((prev) => prev + 1);
+      setSelectedAnswer(-1);
+    } else {
+      // hết câu hỏi => end question
+      setIsEndGame(true);
+    }
+  };
 
   return (
     <View style={tw`justify-center items-center my-2 p-0.5`}>
@@ -103,45 +137,18 @@ const SingleQuiz = ({
         <Text style={tw`text-white`} variant="displayMedium">
           Cau {questionCount}
         </Text>
-        <CountdownCircleTimer
-          isPlaying
-          duration={duration}
-          colors={["#33a3ee", "#F7B801", "#A30000", "#A30000"]}
-          colorsTime={[7, 5, 2, 0]}
-          size={90}
-          onComplete={() => {
-            if (selectedAnswer === -1) setSelectedAnswer(5);
-            setShowAnswer(true);
-            if (selectedAnswer === answer) setScore((prev) => prev + 1);
-            if (questionCount < maxQuestions) {
-              setTimeout(() => {
-                setShowAnswer(false);
-                setCurrentQuestion((prev) => prev + 1);
-                setSelectedAnswer(-1);
-              }, 2000);
-              return { shouldRepeat: true, delay: 2 };
-            }
-            setIsEndGame(true);
-            return { shouldStop: true };
-          }}
-        >
-          {({ remainingTime }) => (
-            <Text style={tw`text-white`} variant="displaySmall">
-              {remainingTime}
-            </Text>
-          )}
-        </CountdownCircleTimer>
+        {!isEndGame && <TimerHandle duration={duration} onTimeOut={handleTimeOut} />}
       </View>
       {/* quiz content */}
       <Text style={tw`text-white`} variant="displaySmall">
-        {question}
+        {question.questionName}
       </Text>
       {/* Answers */}
       <GroupAnswer
-        options={options}
+        options={[question.option1, question.option2, question.option3, question.option4]}
         setSelectedAnswer={setSelectedAnswer}
         selectedAnswer={selectedAnswer}
-        answer={answer}
+        answer={convertAnswerCharToInt(question.answer)}
         showAnswer={showAnswer}
       />
     </View>
