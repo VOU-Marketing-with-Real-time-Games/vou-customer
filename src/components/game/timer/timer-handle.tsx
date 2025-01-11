@@ -30,7 +30,8 @@ const TimerHandle = ({ duration, onTimeOut }: Props) => {
 
   const handleTimeOut = async () => {
     await onTimeOut(); // Gọi hàm bất đồng bộ từ props
-    resetTimer(); // Reset timer sau khi hoàn thành
+    // resetTimer(); // Reset timer sau khi hoàn thành
+    // startTimer(); // Bắt đầu timer mới
   };
 
   React.useEffect(() => {

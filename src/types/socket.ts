@@ -22,3 +22,11 @@ export type IQuizRecevie = {
   answer: string;
   explaination: string | null;
 };
+
+export type ILeaderBoard = {
+  userId: number;
+  fullName: string;
+  imageUrl: string;
+  totalScore: number;
+  quizzId: number;
+};
