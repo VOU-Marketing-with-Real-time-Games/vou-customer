@@ -21,7 +21,11 @@ export type NavigatorParamList = {
   // auth screen
   [SignInScreenName]: undefined;
   [SignUpScreenName]: undefined;
-  [OtpScreenName]: undefined;
+  [OtpScreenName]: {
+    data: {
+      email: string;
+    };
+  };
 
   // main screen
   [MainNavigationName]: undefined;

@@ -69,7 +69,7 @@ const SignUpScreen = () => {
       });
       // send otp
       sendOtpMutation.mutate(response.email);
-      navigation.navigate(OtpScreenName);
+      navigation.navigate(OtpScreenName, { data: { email: response.email } });
     },
   });
 
