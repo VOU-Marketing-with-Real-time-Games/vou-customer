@@ -5,6 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "scheme": "vou",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -32,6 +33,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8b175040-5db9-49e7-b0e0-14b1c3da0c83"
+      }
     }
   }
 }

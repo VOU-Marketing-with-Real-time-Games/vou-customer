@@ -28,7 +28,7 @@ const MainNavigation = () => (
       tabBarLabelStyle: {
         fontSize: 16,
         fontFamily: "Georgia",
-        fontWeight: 700,
+        fontWeight: 500,
       },
       tabBarStyle: {
         height: tabBarHeight,

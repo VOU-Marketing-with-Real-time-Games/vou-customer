@@ -43,8 +43,8 @@ const SingleCampain = ({ campaign, isHorizontal = false }: Props) => {
             {campaign.name}
           </Text>
           <View>
-            <Text variant="bodyMedium">Start date: {formatDate(campaign.startDate)}</Text>
-            <Text variant="bodyMedium">End date: {formatDate(campaign.endDate)}</Text>
+            <Text variant="bodySmall">Start date: {formatDate(campaign.startDate)}</Text>
+            <Text variant="bodySmall">End date: {formatDate(campaign.endDate)}</Text>
           </View>
           {/* <View style={tw`flex-row items-center`}>
             <Icon source="map-marker" size={30} />

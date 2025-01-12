@@ -1,31 +1,36 @@
 import { Image, View } from "react-native";
 import React from "react";
-import { FieldValues, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { TextInput, Text, Button } from "react-native-paper";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import Toast from "react-native-toast-message";
 import AuthLayout from "../../layouts/auth/auth-layout";
 import tw from "../../lib/tailwind";
 import { OtpScreenName, SignInScreenName } from "./auth";
 import { registerSchema, RegisterSchema } from "../../utils/rules";
 import HeplerTextCustom from "../../components/common/hepler-text-custom";
+import { userApi } from "../../api/user.api";
+import { IResError } from "../../types/response";
+import { IFullUser } from "../../types/user";
 
 type FormData = RegisterSchema;
 
 const SignUpScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-  const [isLoading, setIsLoading] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
 
   const {
     handleSubmit,
     setValue,
-    watch,
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
+      userName: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -35,8 +40,41 @@ const SignUpScreen = () => {
     resolver: zodResolver(registerSchema),
   });
 
-  const onSubmit = async (data: FieldValues) => {
-    navigation.navigate(OtpScreenName);
+  const sendOtpMutation = useMutation({
+    mutationFn: (email: string) => userApi.sendOtp(email),
+    onError: (error: AxiosError) => {
+      Toast.show({
+        type: "error",
+        text1: "Lỗi gửi otp",
+        text2: (error.response?.data as IResError)?.errors[0] || "Vui lòng thử lại sau",
+      });
+    },
+  });
+
+  const signupMutation = useMutation({
+    mutationFn: (body: FormData) =>
+      userApi.register({ ...body, avatar: "https://avatar.iran.liara.run/public", role: "USER" }),
+    onError: (error: AxiosError) => {
+      Toast.show({
+        type: "error",
+        text1: "Đăng ký thất bại",
+        text2: (error.response?.data as IResError)?.errors[0] || "Vui lòng thử lại sau",
+      });
+    },
+    onSuccess: (response: IFullUser) => {
+      Toast.show({
+        type: "success",
+        text1: "Đăng ký thành công",
+        text2: "Nhập mã OTP để xác thực tài khoản",
+      });
+      // send otp
+      sendOtpMutation.mutate(response.email);
+      navigation.navigate(OtpScreenName);
+    },
+  });
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    signupMutation.mutate(data);
   };
 
   return (
@@ -52,7 +90,22 @@ const SignUpScreen = () => {
           </View>
 
           {/* form register */}
+
           <View style={tw`mt-3 gap-3`}>
+            <View style={tw`gap-1`}>
+              <Text variant="titleMedium">Username</Text>
+              <View>
+                <TextInput
+                  mode="outlined"
+                  onChangeText={(e) => setValue("userName", e)}
+                  placeholder="Your username"
+                  left={<TextInput.Icon icon="account" />}
+                  error={!!errors.userName?.message}
+                />
+                <HeplerTextCustom errorText={errors.userName?.message} />
+              </View>
+            </View>
+
             <View style={tw`gap-1`}>
               <Text variant="titleMedium">Full Name</Text>
               <View>
@@ -139,7 +192,13 @@ const SignUpScreen = () => {
               </View>
             </View>
 
-            <Button style={tw`py-0.5 mt-2`} labelStyle={tw`text-xl`} mode="contained" onPress={handleSubmit(onSubmit)}>
+            <Button
+              style={tw`py-0.5 mt-5`}
+              labelStyle={tw`text-xl`}
+              mode="contained"
+              onPress={handleSubmit(onSubmit)}
+              disabled={signupMutation.isPending || sendOtpMutation.isPending}
+            >
               Register
             </Button>
           </View>

@@ -1,6 +1,6 @@
 export type ILocation = {
   id: number;
   name: string;
-  latitude: number;
+  lattitude: number;
   longitude: number;
 };

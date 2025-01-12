@@ -1,11 +1,23 @@
-import { View, StyleSheet, Alert, ScrollView, Dimensions, NativeSyntheticEvent, NativeScrollEvent } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Alert,
+  ScrollView,
+  Dimensions,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+  Text,
+} from "react-native";
 import React from "react";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import { Icon, MD3Colors } from "react-native-paper";
+import { useQuery } from "@tanstack/react-query";
 import tw from "../../lib/tailwind";
 import LocationNear from "../../components/location/location-near";
 import { ILocation } from "../../types/location";
+import { IBranch } from "../../types/branch";
+import branchApi from "../../api/branch.api";
 
 const styles = StyleSheet.create({
   container: {
@@ -19,14 +31,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const locations: ILocation[] = [
-  { id: 1, name: "Store 1", latitude: 37.4219983, longitude: -122.084 },
-  { id: 2, name: "Store 2", latitude: 37.4219983, longitude: -122.094 },
-  { id: 3, name: "Store 3", latitude: 37.4219983, longitude: -122.085 },
-  { id: 4, name: "Store 4", latitude: 37.4219983, longitude: -122.075 },
-  { id: 5, name: "Store 5", latitude: 37.4219983, longitude: -122.098 },
-];
-
 const { width } = Dimensions.get("window");
 
 const LocationScreen = () => {
@@ -39,16 +43,27 @@ const LocationScreen = () => {
     latitudeDelta: 0.001,
     longitudeDelta: 0.001,
   });
+  const [branches, setBranches] = React.useState<IBranch[] | null>(null);
+
+  const getAllCampaigns = useQuery({
+    queryKey: ["list-branch"],
+    queryFn: async () => {
+      const response: IBranch[] = await branchApi.getAll();
+      setBranches(response);
+      return response;
+    },
+  });
 
   const onScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const index = Math.min(Math.round(event.nativeEvent.contentOffset.x / (width * 0.8)), locations.length - 1);
-    const location = locations[index];
+    if (!branches) return;
+    const index = Math.min(Math.round(event.nativeEvent.contentOffset.x / (width * 0.8)), branches.length - 1);
+    const location = branches[index];
     setSelectedLocation(location.id);
 
     // Move map to selected marker
     mapRef.current?.animateToRegion(
       {
-        latitude: location.latitude,
+        latitude: location.lattitude,
         longitude: location.longitude,
         latitudeDelta: 0.01,
         longitudeDelta: 0.01,
@@ -79,6 +94,7 @@ const LocationScreen = () => {
       const { coords } = await Location.getCurrentPositionAsync({});
       if (coords) {
         const { latitude, longitude } = coords;
+        console.log(latitude, longitude);
         setPosition({
           latitude,
           longitude,
@@ -92,49 +108,61 @@ const LocationScreen = () => {
 
   return (
     <View style={styles.container}>
-      <MapView
-        ref={mapRef}
-        provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-        style={styles.map}
-        initialRegion={position}
-        showsUserLocation
-        showsMyLocationButton
-        followsUserLocation
-        showsCompass
-        scrollEnabled
-        zoomEnabled
-        pitchEnabled
-        rotateEnabled
-      >
-        {locations.map((location, index) => (
-          <Marker
-            key={location.id}
-            title={location.name}
-            description="This is a description"
-            coordinate={{ latitude: location.latitude, longitude: location.longitude }}
-            onPress={() => onMarkerPress(location, index)}
+      {getAllCampaigns.isLoading ? (
+        <Text>Loading...</Text>
+      ) : (
+        <>
+          <MapView
+            ref={mapRef}
+            provider={PROVIDER_GOOGLE}
+            style={styles.map}
+            initialRegion={position}
+            showsUserLocation
+            showsMyLocationButton
+            followsUserLocation
+            showsCompass
+            scrollEnabled
+            zoomEnabled
+            pitchEnabled
+            rotateEnabled
           >
-            <Icon source="map-marker" color={MD3Colors.error50} size={selectedLocation === location.id ? 42 : 30} />
-          </Marker>
-        ))}
-      </MapView>
-      {/* scroll view location */}
-      <View style={tw`absolute bottom-3 left-0 z-10`}>
-        <ScrollView
-          horizontal
-          ref={scrollViewRef}
-          showsHorizontalScrollIndicator={false}
-          onMomentumScrollEnd={onScrollEnd}
-        >
-          <View style={tw`flex-row gap-5 px-3`}>
-            {locations.map((location, index) => (
-              <View key={`a-${index + 1}`}>
-                <LocationNear name={location.name} />
+            {branches &&
+              branches.map((location, index) => (
+                <Marker
+                  key={location.id}
+                  title={location.name}
+                  description="This is a description"
+                  coordinate={{ latitude: location.lattitude, longitude: location.longitude }}
+                  onPress={() => onMarkerPress(location, index)}
+                >
+                  <Icon
+                    source="map-marker"
+                    color={MD3Colors.error50}
+                    size={selectedLocation === location.id ? 42 : 30}
+                  />
+                </Marker>
+              ))}
+          </MapView>
+          {/* scroll view location */}
+          <View style={tw`absolute bottom-3 left-0 z-10`}>
+            <ScrollView
+              horizontal
+              ref={scrollViewRef}
+              showsHorizontalScrollIndicator={false}
+              onMomentumScrollEnd={onScrollEnd}
+            >
+              <View style={tw`flex-row gap-5 px-3`}>
+                {branches &&
+                  branches.map((location, index) => (
+                    <View key={`a-${index + 1}`}>
+                      <LocationNear location={location} />
+                    </View>
+                  ))}
               </View>
-            ))}
+            </ScrollView>
           </View>
-        </ScrollView>
-      </View>
+        </>
+      )}
     </View>
   );
 };

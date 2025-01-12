@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 3,
     color: "#e706c9",
+    fontSize: 16,
   },
 });
 
@@ -36,7 +37,7 @@ const OtpScreen = () => {
             Enter Verification Code
           </Text>
           <Text variant="bodyLarge" style={tw`text-center`}>
-            We are automactically detecting a SMS send to your phone number
+            We have sent the otp code to your email
           </Text>
         </View>
         <View style={tw`flex-1 items-center justify-center`}>

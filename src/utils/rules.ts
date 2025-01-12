@@ -1,6 +1,7 @@
 import * as zod from "zod";
 
 const authValidation = {
+  userName: zod.string().min(1, "Username is required").max(160, "Maximum length is 160 characters").trim(),
   email: zod
     .string()
     .min(1, { message: "Email is required" })
@@ -34,6 +35,7 @@ export const registerSchema = zod
     confirmPassword: authValidation.confirmPassword,
     fullName: authValidation.fullName,
     phoneNumber: authValidation.phoneNumber,
+    userName: authValidation.userName,
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Confirm password does not match",

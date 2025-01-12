@@ -131,6 +131,7 @@ const QuizGameScreen = () => {
 
   React.useEffect(() => {
     if (isEndGame) {
+      setShowLeaderboard(false);
       showModal();
     }
   }, [isEndGame]);

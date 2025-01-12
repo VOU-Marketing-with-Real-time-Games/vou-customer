@@ -39,7 +39,7 @@ const VoucherDetailScreen = ({ route }: { route: RouteParams }) => {
           <Text style={tw`text-center font-bold`} variant="headlineLarge">
             {campaign.name}
           </Text>
-          <GroupButtonSharing />
+          <GroupButtonSharing campaign={campaign} />
           {/* Group turn, date */}
           <View style={tw`flex-row items-center gap-3`}>
             <View style={tw`bg-blue-200 py-2 w-12 flex-row items-center justify-center rounded-lg`}>

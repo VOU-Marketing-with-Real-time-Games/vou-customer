@@ -14,14 +14,9 @@ import tw from "../../../lib/tailwind";
 const Game = () => {
   const [isRunning, setIsRunning] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
-  const [score, setScore] = useState(0);
+  const [score, setScore] = useState<number>(0);
 
   const gameEngineRef = useRef(null);
-
-  const handlebackToStart = () => {
-    setIsRunning(false);
-    setIsGameOver(false);
-  };
 
   const handleOnStartGame = () => {
     setIsRunning(true);
@@ -48,11 +43,17 @@ const Game = () => {
     }
   };
 
+  React.useEffect(() => {
+    if (score > 2) {
+      handleOnGameOver();
+    }
+  }, [score]);
+
   if (!isRunning && !isGameOver) {
     return <Start handleOnStartGame={handleOnStartGame} />;
   }
   if (!isRunning && isGameOver) {
-    return <GameOver handlebackToStart={handlebackToStart} />;
+    return <GameOver score={score} />;
   }
 
   return (

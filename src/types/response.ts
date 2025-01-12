@@ -9,3 +9,7 @@ export type IPagination<T> = {
   empty: false;
   numberOfElements: number;
 };
+
+export type IResError = {
+  errors: string[];
+};
