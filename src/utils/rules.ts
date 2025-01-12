@@ -24,7 +24,7 @@ const authValidation = {
 };
 
 export const loginSchema = zod.object({
-  email: authValidation.email,
+  username: authValidation.userName,
   password: authValidation.password,
 });
 

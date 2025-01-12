@@ -1,10 +1,13 @@
 import { Image, View } from "react-native";
 import React from "react";
-import { FieldValues, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { TextInput, Text, Button } from "react-native-paper";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import Toast from "react-native-toast-message";
 import AuthLayout from "../../layouts/auth/auth-layout";
 import tw from "../../lib/tailwind";
 import { SignUpScreenName } from "./auth";
@@ -12,12 +15,13 @@ import SocialMedia from "../../components/social-media/social-media";
 import { loginSchema, LoginSchema } from "../../utils/rules";
 import HeplerTextCustom from "../../components/common/hepler-text-custom";
 import { MainNavigationName } from "../../navigation/main-navigation";
+import { userApi } from "../../api/user.api";
+import { ILoginRes } from "../../types/user";
 
 type FormData = LoginSchema;
 
 const SignInScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-  const [isLoading, setIsLoading] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
 
   const {
@@ -26,17 +30,35 @@ const SignInScreen = () => {
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
-      email: "",
+      username: "",
       password: "",
     },
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = async (data: FieldValues) => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: MainNavigationName }],
-    });
+  const signinMutation = useMutation({
+    mutationFn: (body: FormData) => userApi.login(body.username, body.password),
+    onError: (error: AxiosError) => {
+      Toast.show({
+        type: "error",
+        text1: "Đăng nhập thất bại",
+        text2: error.response?.data || "Vui lòng thử lại sau",
+      });
+    },
+    onSuccess: (response: ILoginRes) => {
+      Toast.show({
+        type: "success",
+        text1: "Đăng nhập thành công",
+      });
+      navigation.reset({
+        index: 0,
+        routes: [{ name: MainNavigationName }],
+      });
+    },
+  });
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    signinMutation.mutate(data);
   };
 
   return (
@@ -54,16 +76,16 @@ const SignInScreen = () => {
           {/* form login */}
           <View style={tw`my-3 gap-3`}>
             <View style={tw`gap-1`}>
-              <Text variant="titleMedium">Email</Text>
+              <Text variant="titleMedium">Username</Text>
               <View>
                 <TextInput
                   mode="outlined"
-                  onChangeText={(e) => setValue("email", e)}
-                  placeholder="abc@gmail.com"
-                  left={<TextInput.Icon icon="email" />}
-                  error={!!errors.email?.message}
+                  onChangeText={(e) => setValue("username", e)}
+                  placeholder="Username"
+                  left={<TextInput.Icon icon="account" />}
+                  error={!!errors.username?.message}
                 />
-                <HeplerTextCustom errorText={errors.email?.message} />
+                <HeplerTextCustom errorText={errors.username?.message} />
               </View>
             </View>
 
@@ -89,7 +111,13 @@ const SignInScreen = () => {
               </View>
             </View>
 
-            <Button style={tw`py-0.5`} labelStyle={tw`text-xl`} mode="contained" onPress={handleSubmit(onSubmit)}>
+            <Button
+              style={tw`py-0.5 mt-5`}
+              labelStyle={tw`text-xl`}
+              mode="contained"
+              onPress={handleSubmit(onSubmit)}
+              disabled={signinMutation.isPending}
+            >
               Login
             </Button>
           </View>

@@ -10,3 +10,7 @@ export type IUser = {
 export type IFullUser = IUser & {
   id: number;
 };
+
+export type ILoginRes = {
+  token: string;
+};
