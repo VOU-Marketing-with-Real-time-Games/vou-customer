@@ -66,13 +66,16 @@ const VoucherDetailScreen = ({ route }: { route: RouteParams }) => {
             <Text style={tw`font-bold mb-1`} variant="headlineSmall">
               Description
             </Text>
-            <Text variant="bodyMedium">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat odit labore tenetur, dolorem accusantium
-              doloribus minus odio voluptate! Eveniet quas sed reiciendis provident laborum enim, incidunt eligendi sint
-              facere ipsa. Dolore amet rem architecto esse maiores laudantium, earum quisquam et quasi voluptatibus quae
-              deleniti ut, debitis voluptate dolorem commodi quam dolores libero? Repellendus odit libero necessitatibus
-              dolorem pariatur adipisci unde? Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-            </Text>
+            <View style={tw`gap-5 mt-2`}>
+              <Text variant="bodyMedium">
+                Tất cả các khuyến mãi được lưu trữ trong phần khuyến mãi của ứng dụng. Bạn nên kiểm tra thường xuyên để
+                cập nhật và sử dụng phiếu khuyến mãi mới nhất.
+              </Text>
+              <Text variant="bodyMedium">
+                Để sử dụng khuyến mãi, bạn cần đến cửa hàng. Lựa chọn khuyến mãi bạn muốn sử dụng, đưa cho nhân viên
+                trước khi gọi món để được áp dụng.
+              </Text>
+            </View>
           </View>
           <ButtonChooseGame />
         </View>

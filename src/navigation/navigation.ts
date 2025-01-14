@@ -8,7 +8,7 @@ import { LocationScreenName } from "../screens/location/location";
 import { ProfileScreenName } from "../screens/profile/profile";
 import { FlappyBirdGameScreenName, QuizGameScreenName, ShakeGameScreenName } from "../screens/game/game";
 import { VoucherGiftScreenName } from "../screens/gift/gift";
-import { campaignsScreenName } from "../screens/campaign/campain";
+import { campaignsScreenName, FavoriteCampaignsScreenName } from "../screens/campaign/campain";
 import { ICampaign } from "../types/campaign";
 import { NotifyScreenName } from "../screens/notify/notify";
 
@@ -51,4 +51,6 @@ export type NavigatorParamList = {
   [campaignsScreenName]: undefined;
   // notify
   [NotifyScreenName]: undefined;
+  // favorite
+  [FavoriteCampaignsScreenName]: undefined;
 };

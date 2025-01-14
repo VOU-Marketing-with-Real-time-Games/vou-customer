@@ -9,6 +9,11 @@ const campaignApi = {
     return res.data;
   },
 
+  getAllFavorite: async (userId: number) => {
+    const res = await AxiosClient.get(`${URL_CAMPAIGN}/user-favourite/${userId}`);
+    return res.data;
+  },
+
   search: async (name: string) => {
     const res = await AxiosClient.get(`${URL_CAMPAIGN}/search?name=${name}`);
     return res.data;

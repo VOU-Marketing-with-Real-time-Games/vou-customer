@@ -13,6 +13,7 @@ import { SignInScreenName } from "../auth/auth";
 import { IFullUser } from "../../types/user";
 import { userApi } from "../../api/user.api";
 import { NotifyScreenName } from "../notify/notify";
+import { FavoriteCampaignsScreenName } from "../campaign/campain";
 
 const ProfileScreen = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -90,7 +91,10 @@ const ProfileScreen = () => {
             Notification
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={tw`flex-row items-center gap-5`}>
+        <TouchableOpacity
+          style={tw`flex-row items-center gap-5`}
+          onPress={() => navigation.navigate(FavoriteCampaignsScreenName)}
+        >
           <Icon source="cards-heart-outline" color={MD3Colors.primary20} size={28} />
           <Text variant="titleLarge" style={tw`flex-1 text-gray-600 font-medium`}>
             Your Favorites

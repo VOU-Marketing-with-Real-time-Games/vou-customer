@@ -22,9 +22,10 @@ import QuizGameScreen from "../screens/game/quiz-game-screen";
 import { VoucherGiftScreenName } from "../screens/gift/gift";
 import VoucherGiftScreen from "../screens/gift/voucher-gift-screen";
 import CampaignsScreen from "../screens/campaign/campaigns-screen";
-import { campaignsScreenName } from "../screens/campaign/campain";
+import { campaignsScreenName, FavoriteCampaignsScreenName } from "../screens/campaign/campain";
 import { NotifyScreenName } from "../screens/notify/notify";
 import NotifyScreen from "../screens/notify/notify-screen";
+import FavoriteCampaignsScreen from "../screens/campaign/favorite-campaigns-screen";
 
 const Stack = createNativeStackNavigator<NavigatorParamList>();
 
@@ -94,6 +95,14 @@ const StackNavigation = () => {
         })}
         name={NotifyScreenName}
         component={NotifyScreen}
+      />
+      {/* your favorite */}
+      <Stack.Screen
+        options={({ route }) => ({
+          header: () => <Header title="Your favorite" canGoBack />,
+        })}
+        name={FavoriteCampaignsScreenName}
+        component={FavoriteCampaignsScreen}
       />
     </Stack.Navigator>
   );

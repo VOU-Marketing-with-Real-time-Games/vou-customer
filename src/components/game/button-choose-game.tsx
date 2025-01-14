@@ -21,7 +21,7 @@ const ButtonChooseGame = () => {
         onPress={showModal}
       >
         <View style={tw`flex-row items-center gap-4`}>
-          <Text variant="titleLarge" style={tw`text-white`}>
+          <Text variant="titleLarge" style={tw`text-white ml-20`}>
             Choose game
           </Text>
           <Icon source="gamepad-variant" size={32} color="white" />

@@ -46,7 +46,7 @@ NotifyScreen.Skeleton = () => (
   <ScrollView showsVerticalScrollIndicator={false} style={tw`mt-3`}>
     <View style={tw`gap-3`}>
       {Array.from({ length: 4 }, (_, i) => (
-        <View style={tw`bg-gray-200 rounded-lg px-4 w-full h-40`} key={i} />
+        <View style={tw`bg-gray-200 rounded-lg px-4 w-full h-20`} key={i} />
       ))}
     </View>
   </ScrollView>

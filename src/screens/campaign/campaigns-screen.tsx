@@ -1,6 +1,6 @@
 import { ScrollView, View } from "react-native";
 import React from "react";
-import { Searchbar } from "react-native-paper";
+import { Searchbar, Text } from "react-native-paper";
 import { useQuery } from "@tanstack/react-query";
 import tw from "../../lib/tailwind";
 import { ICampaign } from "../../types/campaign";
@@ -23,6 +23,9 @@ const CampaignsScreen = () => {
   return (
     <View style={tw`mt-1 flex-1`}>
       <Searchbar placeholder="Search Vouchers" onChangeText={setSearchQuery} value={searchQuery} />
+      <Text variant="bodyLarge" style={tw`font-bold ml-3`}>
+        {campaigns?.length || 0} Campaigns
+      </Text>
       {getCampaignsByName.isLoading || getCampaignsByName.isFetching ? (
         <CampaignsScreen.Skeleton />
       ) : (
