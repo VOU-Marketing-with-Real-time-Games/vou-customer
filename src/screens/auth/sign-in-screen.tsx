@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import Toast from "react-native-toast-message";
+import { useDispatch } from "react-redux";
 import AuthLayout from "../../layouts/auth/auth-layout";
 import tw from "../../lib/tailwind";
 import { SignUpScreenName } from "./auth";
@@ -16,13 +17,17 @@ import { loginSchema, LoginSchema } from "../../utils/rules";
 import HeplerTextCustom from "../../components/common/hepler-text-custom";
 import { MainNavigationName } from "../../navigation/main-navigation";
 import { userApi } from "../../api/user.api";
-import { ILoginRes } from "../../types/user";
+import { IFullUser, ILoginRes, IUser } from "../../types/user";
+import { AppDispatch } from "../../store";
+import { setUser } from "../../store/user";
 
 type FormData = LoginSchema;
 
 const SignInScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const [showPassword, setShowPassword] = React.useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const [token, setToken] = React.useState<string>("");
 
   const {
     handleSubmit,
@@ -36,20 +41,31 @@ const SignInScreen = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const signinMutation = useMutation({
-    mutationFn: (body: FormData) => userApi.login(body.username, body.password),
+  const profileMutation = useMutation({
+    mutationFn: (email: string) => userApi.getProfile(email),
     onError: (error: AxiosError) => {
       Toast.show({
         type: "error",
         text1: "Đăng nhập thất bại",
-        text2: error.response?.data || "Vui lòng thử lại sau",
+        text2: typeof error.response?.data === "string" ? error.response.data : "Vui lòng thử lại sau",
       });
     },
-    onSuccess: (response: ILoginRes) => {
+    onSuccess: (response: IFullUser) => {
       Toast.show({
         type: "success",
         text1: "Đăng nhập thành công",
       });
+      // luu vao localstorage
+      console.log("response", response);
+      dispatch(
+        setUser({
+          email: response.email,
+          token,
+          userId: response.id,
+          username: response.userName || response.username || "",
+        }),
+      );
+      // ve trang home
       navigation.reset({
         index: 0,
         routes: [{ name: MainNavigationName }],
@@ -57,8 +73,29 @@ const SignInScreen = () => {
     },
   });
 
+  const signinMutation = useMutation({
+    mutationFn: (body: FormData) => userApi.login(body.username, body.password),
+    onError: (error: AxiosError) => {
+      Toast.show({
+        type: "error",
+        text1: "Đăng nhập thất bại",
+        text2: typeof error.response?.data === "string" ? error.response.data : "Vui lòng thử lại sau",
+      });
+    },
+    onSuccess: (response: ILoginRes) => {
+      Toast.show({
+        type: "success",
+        text1: "Đăng nhập thành công",
+      });
+      // lay thong tin user va token
+      setToken(response.token);
+      // luu vao localstorage
+    },
+  });
+
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    signinMutation.mutate(data);
+    await signinMutation.mutate(data);
+    await profileMutation.mutate(data.username);
   };
 
   return (

@@ -1,4 +1,4 @@
-import { Dimensions, Image, View } from "react-native";
+import { Dimensions, Image, View, Linking } from "react-native";
 import React from "react";
 import { Text, Icon, MD3Colors, Button } from "react-native-paper";
 import tw from "../../lib/tailwind";
@@ -32,7 +32,15 @@ const LocationNear = ({ location }: Props) => (
         </View>
       </View>
     </View>
-    <Button mode="outlined">Direction</Button>
+    <Button
+      mode="outlined"
+      onPress={() => {
+        const url = `https://www.google.com/maps/search/?api=1&query=${location.lattitude},${location.longitude}`;
+        Linking.openURL(url);
+      }}
+    >
+      Direction
+    </Button>
   </View>
 );
 

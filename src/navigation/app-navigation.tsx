@@ -1,6 +1,8 @@
 import React from "react";
 import { createNativeStackNavigator, NativeStackNavigationOptions } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
+import * as Linking from "expo-linking";
+import { Text } from "react-native";
 import SplashScreen, { SplashScreenName } from "../screens/splash/splash-screen";
 import OnboardingScreen from "../screens/onboarding/onboarding-screen";
 import { OnboardingScreenName } from "../screens/onboarding/onboarding";
@@ -86,11 +88,18 @@ const StackNavigation = () => {
     </Stack.Navigator>
   );
 };
+const prefix = Linking.createURL("/");
 
-const AppNavigation = () => (
-  <NavigationContainer>
-    <StackNavigation />
-  </NavigationContainer>
-);
+const AppNavigation = () => {
+  const linking = {
+    prefixes: [prefix],
+  };
+
+  return (
+    <NavigationContainer linking={linking} fallback={<Text>Loading...</Text>}>
+      <StackNavigation />
+    </NavigationContainer>
+  );
+};
 
 export default AppNavigation;

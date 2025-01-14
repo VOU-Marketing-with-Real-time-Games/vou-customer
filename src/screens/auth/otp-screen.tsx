@@ -59,7 +59,7 @@ const OtpScreen = ({ route }: { route: RouteParams }) => {
       Toast.show({
         type: "error",
         text1: "Lỗi xác thực email",
-        text2: error.response?.data || "Vui lòng thử lại sau",
+        text2: (error.response?.data as string) || "Vui lòng thử lại sau",
       });
     },
     onSuccess: () => {

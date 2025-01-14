@@ -7,6 +7,7 @@ const initialState: IUser = {
   email: null,
   token: null,
   userId: null,
+  username: null,
 };
 
 const userSlice = createSlice({

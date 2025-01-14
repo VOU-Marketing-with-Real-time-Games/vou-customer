@@ -163,7 +163,7 @@ const QuizGameScreen = () => {
             setShowLeaderBoard={setShowLeaderboard}
           />
           {/* leader board */}
-          <LeaderBoard visible={showLeaderboard} leaderBoard={leaderBoard} />
+          <LeaderBoard visible={showLeaderboard && !isEndGame} leaderBoard={leaderBoard} />
           {/* end game */}
           <Portal>
             <Modal visible={visible} contentContainerStyle={tw`rounded-2xl mx-2 p-4 bg-white gap-8`}>

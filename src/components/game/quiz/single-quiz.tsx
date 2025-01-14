@@ -1,10 +1,12 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { Text } from "react-native-paper";
+import { useSelector } from "react-redux";
 import tw from "../../../lib/tailwind";
 import { IQuizRecevie } from "../../../types/socket";
 import { convertAnswerCharToInt, convertAnswerIntToChar } from "../../../utils/quiz";
 import quizApi from "../../../api/quiz.api";
+import { AppState } from "../../../store";
 
 type Props = {
   questions: IQuizRecevie[];
@@ -97,6 +99,7 @@ const SingleQuiz = ({
   const [isRunning, setIsRunning] = React.useState(true);
   const intervalRef = React.useRef<NodeJS.Timeout | null>(null);
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
+  const user = useSelector((state: AppState) => state.user);
 
   const startTimer = () => {
     setIsRunning(true);
@@ -118,7 +121,7 @@ const SingleQuiz = ({
       setSelectedAnswer(4);
       // gửi trả lời của user về server
       await quizApi.setUserAnswer({
-        userId: 3,
+        userId: user.userId!,
         questionId: questions[currentQuestion].id,
         answer: convertAnswerIntToChar(selectedAnswer),
         answerTime: 0,
@@ -143,14 +146,16 @@ const SingleQuiz = ({
       setSelectedAnswer(-1);
     } else {
       // hết câu hỏi => end question
-      setIsEndGame(true);
+      setTimeout(() => setIsEndGame(true), 0);
     }
   };
 
   const handleTimeOut = async () => {
     await OnTimeOut(); // Gọi hàm bất đồng bộ từ props
-    resetTimer(); // Reset timer sau khi hoàn thành
-    setTimeout(() => startTimer(), 0); // Đảm bảo khởi động lại sau khi reset
+    if (!isEndGame) {
+      resetTimer(); // Reset timer sau khi hoàn thành
+      setTimeout(() => startTimer(), 0); // Đảm bảo khởi động lại sau khi reset
+    }
   };
 
   React.useEffect(() => {
@@ -179,7 +184,7 @@ const SingleQuiz = ({
   React.useEffect(() => {
     async function sendAnswer() {
       await quizApi.setUserAnswer({
-        userId: 3,
+        userId: user.userId!,
         questionId: questions[currentQuestion].id,
         answer: convertAnswerIntToChar(selectedAnswer),
         answerTime: timeLeft,

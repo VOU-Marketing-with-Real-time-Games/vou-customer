@@ -1,4 +1,4 @@
-import { IUser } from "../types/user";
+import { IIncreasePlayTurnReq, IUser } from "../types/user";
 import AxiosClient from "./axios";
 
 const URL_USER = "/users";
@@ -26,6 +26,16 @@ export const userApi = {
 
   verifyAccount: async (email: string, otp: string) => {
     const res = await AxiosClient.post(`${URL_VERIFY}`, { email, otp });
+    return res.data;
+  },
+
+  increasePlayTurn: async (data: IIncreasePlayTurnReq) => {
+    const res = await AxiosClient.post(`${URL_USER}/${data.userID}/increase-play-turn`, data);
+    return res.data;
+  },
+
+  getProfile: async (username: string) => {
+    const res = await AxiosClient.get(`${URL_USER}/username/${username}`);
     return res.data;
   },
 };

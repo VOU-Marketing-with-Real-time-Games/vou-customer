@@ -1225,6 +1225,17 @@
     dotenv-expand "~11.0.6"
     getenv "^1.0.0"
 
+"@expo/env@~0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@expo/env/-/env-0.4.1.tgz#8691f6c7df08e66af767ff607e1eac2010487fdc"
+  integrity sha512-oDtbO3i9yXD1nx93acWiPTWGljJ3vABn35x1NAbqtQ2JL6mFOcRcArt1dwi4imZyLnG4VCcjabT9irj+LgYntw==
+  dependencies:
+    chalk "^4.0.0"
+    debug "^4.3.4"
+    dotenv "~16.4.5"
+    dotenv-expand "~11.0.6"
+    getenv "^1.0.0"
+
 "@expo/fingerprint@0.11.4":
   version "0.11.4"
   resolved "https://registry.yarnpkg.com/@expo/fingerprint/-/fingerprint-0.11.4.tgz#f40bbc784e10a065b783091e0d060a7428d41a7c"
@@ -4175,6 +4186,14 @@ expo-constants@~17.0.0, expo-constants@~17.0.3:
     "@expo/config" "~10.0.4"
     "@expo/env" "~0.4.0"
 
+expo-constants@~17.0.4:
+  version "17.0.4"
+  resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-17.0.4.tgz#d0b653dc9a36fc0b25887c99a46d9806bdfe462d"
+  integrity sha512-5c0VlZycmDyQUCMCr3Na3cpHAsVJJ+5o6KkkD4rmATQZ0++Xp/S2gpnjWyEo2riRmO91vxoyHwmAySXuktJddQ==
+  dependencies:
+    "@expo/config" "~10.0.8"
+    "@expo/env" "~0.4.1"
+
 expo-dev-client@~5.0.9:
   version "5.0.9"
   resolved "https://registry.yarnpkg.com/expo-dev-client/-/expo-dev-client-5.0.9.tgz#258ceb69d5649e6a1588ccbed5a8bde24aeb2e7a"
@@ -4236,6 +4255,14 @@ expo-linear-gradient@~14.0.1:
   version "14.0.1"
   resolved "https://registry.yarnpkg.com/expo-linear-gradient/-/expo-linear-gradient-14.0.1.tgz#f93c518014b6eb5ee17ed6562db716640ad27f3e"
   integrity sha512-apGtUO9AZ52ZWvX9f6K9TamWw8XcUby7jZ0Pcvd5LxUO7pl7tDPx2VlKqpzbhhS4yfCiUwX58wqocwVnE/0ZVg==
+
+expo-linking@~7.0.4:
+  version "7.0.4"
+  resolved "https://registry.yarnpkg.com/expo-linking/-/expo-linking-7.0.4.tgz#e1f1496dfcee14899f6fd3bf1f2c8af5990ac334"
+  integrity sha512-i+QaFc2zwOoq/ajePVWC+op3cOKC6nd6Wj/BJtukU71byTAbxDhbi+3m0ZFbh2i1/v/iIXRqrl3PvQcKNklPkw==
+  dependencies:
+    expo-constants "~17.0.4"
+    invariant "^2.2.4"
 
 expo-location@~18.0.4:
   version "18.0.4"
