@@ -74,7 +74,7 @@ const Game = () => {
   };
 
   React.useEffect(() => {
-    if (score > 5) {
+    if (score > 2) {
       handleOnGameOver();
     }
   }, [score]);

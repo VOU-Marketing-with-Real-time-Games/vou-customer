@@ -55,7 +55,7 @@ const ShakeGameScreen = () => {
   const handleShakeGameEnd = () => {
     // nhan random puzzle
     setCount((prevCount) => {
-      if (prevCount >= 1) {
+      if (prevCount >= 10) {
         receiveRandomItem.mutate();
       }
       return prevCount;
