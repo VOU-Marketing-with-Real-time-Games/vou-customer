@@ -3,4 +3,5 @@ export interface IUser {
   token: string | null;
   username: string | null;
   userId: number | null;
+  image: string | null;
 }

@@ -63,6 +63,7 @@ const SignInScreen = () => {
           token,
           userId: response.id,
           username: response.userName || response.username || "",
+          image: response.image || "https://avatar.iran.liara.run/public",
         }),
       );
       // ve trang home

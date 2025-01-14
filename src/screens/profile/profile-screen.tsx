@@ -12,6 +12,7 @@ import { clearUser } from "../../store/user";
 import { SignInScreenName } from "../auth/auth";
 import { IFullUser } from "../../types/user";
 import { userApi } from "../../api/user.api";
+import { NotifyScreenName } from "../notify/notify";
 
 const ProfileScreen = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -83,10 +84,10 @@ const ProfileScreen = () => {
             Puzzle Collection
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={tw`flex-row items-center gap-5`}>
-          <Icon source="history" color={MD3Colors.primary20} size={28} />
+        <TouchableOpacity style={tw`flex-row items-center gap-5`} onPress={() => navigation.navigate(NotifyScreenName)}>
+          <Icon source="bell-outline" color={MD3Colors.primary20} size={28} />
           <Text variant="titleLarge" style={tw`flex-1 text-gray-600 font-medium`}>
-            History
+            Notification
           </Text>
         </TouchableOpacity>
         <TouchableOpacity style={tw`flex-row items-center gap-5`}>

@@ -1,10 +1,11 @@
-import { ImageBackground, View, Image } from "react-native";
+import { ImageBackground, View } from "react-native";
 import React from "react";
 
 import { Text, Modal, Portal, Button } from "react-native-paper";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { URL_QUIZ, WEBSOCKET_URL } from "@env";
+import { useSelector } from "react-redux";
 import tw from "../../lib/tailwind";
 import SingleQuiz from "../../components/game/quiz/single-quiz";
 import MainLayout from "../../layouts/main/main-layout";
@@ -13,8 +14,10 @@ import { IAnswerSocketDone, IConnectQuizSocket, ILeaderBoard, IQuizRecevie } fro
 import LeaderBoard from "../../components/game/leader-board";
 import GameStarted from "../../components/game/game-started";
 import WaitingStartGame from "../../components/game/waiting-start-game";
+import { AppState } from "../../store";
 
 const QuizGameScreen = () => {
+  const user = useSelector((state: AppState) => state.user);
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const [isEndGame, setIsEndGame] = React.useState(false);
   const [score, setScore] = React.useState(0);
@@ -65,7 +68,7 @@ const QuizGameScreen = () => {
       console.log("Game WebSocket connection opened");
       connectQuizSocket({
         type: "CONNECT_QUIZ",
-        userId: "3",
+        userId: user.userId?.toString() || "0",
         quizzId: "1",
       });
     };
@@ -140,7 +143,7 @@ const QuizGameScreen = () => {
     // send socket message, nguoi choi da hoan thanh cau nay va da gui dap an ve server
     sendAnswerComplete({
       type: "ANSWER_COMPLETE",
-      userId: "3",
+      userId: user.userId?.toString() || "0",
       quizzId: "1",
     });
   };

@@ -8,6 +8,7 @@ const initialState: IUser = {
   token: null,
   userId: null,
   username: null,
+  image: null,
 };
 
 const userSlice = createSlice({

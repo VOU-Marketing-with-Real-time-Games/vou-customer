@@ -15,7 +15,7 @@ const SplashScreen = () => {
 
   React.useEffect(() => {
     setTimeout(() => {
-      if (user && user.token) {
+      if (user && user.username) {
         navigation.replace(MainNavigationName);
       } else {
         navigation.replace(OnboardingScreenName);

@@ -23,6 +23,8 @@ import { VoucherGiftScreenName } from "../screens/gift/gift";
 import VoucherGiftScreen from "../screens/gift/voucher-gift-screen";
 import CampaignsScreen from "../screens/campaign/campaigns-screen";
 import { campaignsScreenName } from "../screens/campaign/campain";
+import { NotifyScreenName } from "../screens/notify/notify";
+import NotifyScreen from "../screens/notify/notify-screen";
 
 const Stack = createNativeStackNavigator<NavigatorParamList>();
 
@@ -84,6 +86,14 @@ const StackNavigation = () => {
         })}
         name={campaignsScreenName}
         component={CampaignsScreen}
+      />
+      {/* Notify */}
+      <Stack.Screen
+        options={({ route }) => ({
+          header: () => <Header title="Notification" canGoBack />,
+        })}
+        name={NotifyScreenName}
+        component={NotifyScreen}
       />
     </Stack.Navigator>
   );

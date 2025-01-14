@@ -18,7 +18,7 @@ const LeaderBoard = ({ visible, leaderBoard }: Props) => (
         </Text>
         {leaderBoard.map((leader, index) => (
           <View key={leader.userId} style={tw`flex-row items-center gap-2`}>
-            <Text variant="headlineMedium" style={tw`font-bold`}>
+            <Text variant="headlineSmall" style={tw`font-bold`}>
               {index + 1}
             </Text>
             <Image
@@ -27,10 +27,10 @@ const LeaderBoard = ({ visible, leaderBoard }: Props) => (
               }}
               style={tw`w-10 h-10 rounded-full`}
             />
-            <Text variant="headlineMedium" style={tw`font-bold`}>
+            <Text variant="headlineSmall" style={tw`font-bold`}>
               {leader.fullName}
             </Text>
-            <Text variant="headlineMedium" style={tw`font-bold`}>
+            <Text variant="headlineSmall" style={tw`font-bold`}>
               {leader.totalScore}
             </Text>
           </View>

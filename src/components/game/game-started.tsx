@@ -14,7 +14,7 @@ const GameStarted = () => (
       source={require("../../../assets/animations/opened.json")}
       autoPlay
       loop
-      style={tw`absolute top-10 left-0 right-0 bottom-0`}
+      style={tw`absolute top-25 left-0 right-0 bottom-0`}
     />
   </View>
 );

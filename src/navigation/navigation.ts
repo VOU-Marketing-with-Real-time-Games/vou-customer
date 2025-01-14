@@ -10,6 +10,7 @@ import { FlappyBirdGameScreenName, QuizGameScreenName, ShakeGameScreenName } fro
 import { VoucherGiftScreenName } from "../screens/gift/gift";
 import { campaignsScreenName } from "../screens/campaign/campain";
 import { ICampaign } from "../types/campaign";
+import { NotifyScreenName } from "../screens/notify/notify";
 
 export type NavigatorParamList = {
   // splash screen
@@ -48,4 +49,6 @@ export type NavigatorParamList = {
   [VoucherGiftScreenName]: undefined;
   // Campaign
   [campaignsScreenName]: undefined;
+  // notify
+  [NotifyScreenName]: undefined;
 };

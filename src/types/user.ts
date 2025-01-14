@@ -10,6 +10,7 @@ export type IUser = {
 
 export type IFullUser = IUser & {
   id: number;
+  image: string;
 };
 
 export type ILoginRes = {

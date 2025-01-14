@@ -25,7 +25,7 @@ const ListNewestCampain = () => {
   });
 
   return (
-    <View style={tw`px-2`}>
+    <View style={tw`px-2 mt-34`}>
       {/* Header */}
       <View style={tw`flex-row items-center justify-between`}>
         <Text variant="titleLarge" style={tw`font-bold`}>

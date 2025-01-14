@@ -1,6 +1,6 @@
 import { View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
-import { Icon, Surface, Text } from "react-native-paper";
+import { Surface, Text } from "react-native-paper";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import tw from "../../../lib/tailwind";
