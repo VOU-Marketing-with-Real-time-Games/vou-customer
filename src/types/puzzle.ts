@@ -5,3 +5,16 @@ export type IPuzzle = {
   description: string;
   itemNum: number;
 };
+
+export type IItem = {
+  id: number;
+  position: number;
+  description: string;
+  total: number;
+};
+
+export type IFullItem = {
+  id: number;
+  totalItem: number;
+  item: IItem;
+};

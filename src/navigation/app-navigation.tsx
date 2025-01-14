@@ -26,9 +26,10 @@ import { campaignsScreenName, FavoriteCampaignsScreenName } from "../screens/cam
 import { NotifyScreenName } from "../screens/notify/notify";
 import NotifyScreen from "../screens/notify/notify-screen";
 import FavoriteCampaignsScreen from "../screens/campaign/favorite-campaigns-screen";
-import { PuzzleScreenName } from "../screens/puzzle/puzzle";
+import { PuzzleListScreenName, PuzzleScreenName } from "../screens/puzzle/puzzle";
 import PuzzleScreen from "../screens/puzzle/puzzle-screen";
 import PuzzleGiftScreen from "../screens/gift/puzzle-gift-screen";
+import PuzzleListScreen from "../screens/puzzle/puzzle-list-screen";
 
 const Stack = createNativeStackNavigator<NavigatorParamList>();
 
@@ -112,10 +113,18 @@ const StackNavigation = () => {
       {/* puzzle collection */}
       <Stack.Screen
         options={({ route }) => ({
-          header: () => <Header title="Puzzle Collection" canGoBack />,
+          header: () => <Header title={route.params.puzzle.name} canGoBack />,
         })}
         name={PuzzleScreenName}
         component={PuzzleScreen}
+      />
+      {/* list puzzle collection */}
+      <Stack.Screen
+        options={({ route }) => ({
+          header: () => <Header title="Puzzle Collection" canGoBack />,
+        })}
+        name={PuzzleListScreenName}
+        component={PuzzleListScreen}
       />
     </Stack.Navigator>
   );

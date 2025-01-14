@@ -13,6 +13,16 @@ const puzzleApi = {
     const res = await AxiosClient.get(`${URL_PUZZLE}/${puzzleId}`);
     return res.data;
   },
+
+  getPuzzles: async () => {
+    const res = await AxiosClient.get(URL_PUZZLE);
+    return res.data;
+  },
+
+  getUserItemsByPuzzleId: async (userId: string | number, puzzleId: string | number) => {
+    const res = await AxiosClient.get(`${URL_USER_ITEMS}/user/${userId}/puzzle/${puzzleId}`);
+    return res.data;
+  },
 };
 
 export default puzzleApi;

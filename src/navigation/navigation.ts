@@ -11,7 +11,8 @@ import { PuzzleGiftScreenName, VoucherGiftScreenName } from "../screens/gift/gif
 import { campaignsScreenName, FavoriteCampaignsScreenName } from "../screens/campaign/campain";
 import { ICampaign } from "../types/campaign";
 import { NotifyScreenName } from "../screens/notify/notify";
-import { PuzzleScreenName } from "../screens/puzzle/puzzle";
+import { PuzzleListScreenName, PuzzleScreenName } from "../screens/puzzle/puzzle";
+import { IPuzzle } from "../types/puzzle";
 
 export type NavigatorParamList = {
   // splash screen
@@ -59,5 +60,8 @@ export type NavigatorParamList = {
   // favorite
   [FavoriteCampaignsScreenName]: undefined;
   // puzzle
-  [PuzzleScreenName]: undefined;
+  [PuzzleScreenName]: {
+    puzzle: IPuzzle;
+  };
+  [PuzzleListScreenName]: undefined;
 };
