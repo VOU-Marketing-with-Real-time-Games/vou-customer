@@ -13,12 +13,12 @@ import { campaignsScreenName } from "../../../screens/campaign/campain";
 
 const ListNewestCampain = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-  const [campaigns, setCampaigns] = React.useState<IPagination<ICampaign> | null>(null);
+  const [campaigns, setCampaigns] = React.useState<ICampaign[] | null>(null);
 
   const getAllCampaigns = useQuery({
-    queryKey: ["list-campaign"],
+    queryKey: ["list-newest-campaign"],
     queryFn: async () => {
-      const response: IPagination<ICampaign> = await campaignApi.getAll();
+      const response: ICampaign[] = await campaignApi.getNewest();
       setCampaigns(response);
       return response;
     },
@@ -45,11 +45,14 @@ const ListNewestCampain = () => {
       ) : (
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={tw`mt-3`}>
           <View style={tw`flex-row gap-5`}>
-            {campaigns?.content.map((campaign) => (
-              <View key={campaign.id}>
-                <SingleCampain campaign={campaign} />
-              </View>
-            ))}
+            {campaigns?.map((campaign, idx) => {
+              if (idx > 10) return <></>;
+              return (
+                <View key={campaign.id}>
+                  <SingleCampain campaign={campaign} />
+                </View>
+              );
+            })}
           </View>
         </ScrollView>
       )}

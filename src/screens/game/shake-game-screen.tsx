@@ -1,8 +1,9 @@
-import { Image, View } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import { Text } from "react-native-paper";
 import { Accelerometer, AccelerometerMeasurement } from "expo-sensors";
 import { Subscription } from "expo-sensors/build/DeviceSensor";
+import LottieView from "lottie-react-native";
 import tw from "../../lib/tailwind";
 
 const SHAKE_THRESHOLD = 4;
@@ -41,14 +42,20 @@ const ShakeGameScreen = () => {
   }, []);
 
   return (
-    <View style={tw`flex-1 justify-center items-center gap-10`}>
-      <Text variant="titleLarge">Shake your phone to receive a gift.</Text>
-      <Image
-        source={require("../../../assets/images/game/shake/shake_phone.png")}
-        alt="Shake phone"
-        style={tw`w-44 h-44`}
+    <View style={tw`flex-1 justify-center items-center gap-10 bg-white`}>
+      <Text variant="titleLarge" style={tw`text-center absolute top-20 text-green-700`}>
+        Shake your phone to receive a gift.
+      </Text>
+      <LottieView
+        source={require("../../../assets/animations/shake.json")}
+        autoPlay
+        loop
+        style={tw`absolute top-0 left-0 right-0 bottom-10`}
       />
-      <Text variant="displayLarge">Score: {count}</Text>
+
+      <Text variant="displayLarge" style={tw`bottom-30 absolute text-green-500`}>
+        Score: {count}
+      </Text>
     </View>
   );
 };

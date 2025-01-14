@@ -1,12 +1,16 @@
 import { View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
-import { Surface, Text } from "react-native-paper";
+import { Surface, Text, Icon, MD3Colors } from "react-native-paper";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useSelector } from "react-redux";
 import tw from "../../../lib/tailwind";
 import { VoucherDetailScreenName } from "../../../screens/voucher/voucher";
 import { ICampaign } from "../../../types/campaign";
 import { formatDate } from "../../../utils/date-format";
+import campaignApi from "../../../api/campaign.api";
+import { AppState } from "../../../store";
 
 type Props = {
   campaign: ICampaign;
@@ -21,6 +25,32 @@ const styles = StyleSheet.create({
 
 const SingleCampain = ({ campaign, isHorizontal = false }: Props) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+  const user = useSelector((state: AppState) => state.user);
+  const [isFavorite, setIsFavorite] = React.useState(false);
+
+  const checkIsFavoriteQuery = useQuery({
+    queryKey: ["check-is-favorite", campaign.id],
+    queryFn: async () => {
+      const res: boolean = await campaignApi.checkIsFavorite(user.userId!, campaign.id);
+      setIsFavorite(res);
+      return res;
+    },
+    enabled: !!user.userId && !!campaign.id && !isHorizontal,
+  });
+
+  const addToFavoriteQuery = useMutation({
+    mutationFn: () => campaignApi.addToFavorite(user.userId!, campaign.id),
+    onSuccess: () => {
+      checkIsFavoriteQuery.refetch();
+    },
+  });
+
+  const handleAddToFavorite = () => {
+    if (!isFavorite) {
+      // add to favorite
+      addToFavoriteQuery.mutate();
+    }
+  };
 
   return (
     <TouchableOpacity
@@ -46,13 +76,20 @@ const SingleCampain = ({ campaign, isHorizontal = false }: Props) => {
             <Text variant="bodySmall">Start date: {formatDate(campaign.startDate)}</Text>
             <Text variant="bodySmall">End date: {formatDate(campaign.endDate)}</Text>
           </View>
-          {/* <View style={tw`flex-row items-center`}>
-            <Icon source="map-marker" size={30} />
-            <Text variant="bodyMedium" style={tw`text-center`}>
-              Nha Trang, Khanh Hoa
-            </Text>
-          </View> */}
         </View>
+        {/* add to favorite */}
+        {!isHorizontal && (
+          <TouchableOpacity
+            style={tw`flex-row items-center absolute top-2 right-2 p-2 bg-red-100 rounded-xl`}
+            onPress={handleAddToFavorite}
+          >
+            {isFavorite ? (
+              <Icon source="cards-heart" color={MD3Colors.error50} size={42} />
+            ) : (
+              <Icon source="cards-heart-outline" color={MD3Colors.error50} size={42} />
+            )}
+          </TouchableOpacity>
+        )}
       </Surface>
     </TouchableOpacity>
   );
