@@ -22,6 +22,7 @@ module.exports = {
     "no-param-reassign": 0,
     "import/no-unresolved": ["error", { ignore: ["^@env$"] }],
     "no-nested-ternary": 0,
+    "react/no-array-index-key": 0,
     // "jsx-props-no-spreading": 0,
     // '@typescript-eslint/indent': 'off',
     // 'react/prop-types': 'off',

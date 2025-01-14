@@ -34,8 +34,18 @@ export const userApi = {
     return res.data;
   },
 
+  decreasePlayTurn: async (data: IIncreasePlayTurnReq) => {
+    const res = await AxiosClient.post(`${URL_USER}/${data.userID}/decrease-play-turn`, data);
+    return res.data;
+  },
+
   getProfile: async (username: string) => {
     const res = await AxiosClient.get(`${URL_USER}/username/${username}`);
+    return res.data;
+  },
+
+  getPlayTurn: async (userId: string | number) => {
+    const res = await AxiosClient.get(`${URL_USER}/${userId}/play-turn`);
     return res.data;
   },
 };

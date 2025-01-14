@@ -32,26 +32,16 @@ const VoucherDetailScreen = ({ route }: { route: RouteParams }) => {
           }}
           width={250}
           height={150}
-          style={tw`w-full`}
+          style={tw`w-full rounded-b-xl`}
           alt="Campain Image"
         />
-        <View style={tw`px-2 gap-3`}>
+        <View style={tw`px-2 gap-2`}>
           <Text style={tw`text-center font-bold`} variant="headlineLarge">
             {campaign.name}
           </Text>
           <GroupButtonSharing campaign={campaign} />
           {/* Group turn, date */}
-          <View style={tw`flex-row items-center gap-3`}>
-            <View style={tw`bg-blue-200 py-2 w-12 flex-row items-center justify-center rounded-lg`}>
-              <Icon source="gamepad-variant" color={MD3Colors.primary20} size={30} />
-            </View>
-            <View style={tw``}>
-              <Text style={tw`text-red-500 font-bold`} variant="bodyLarge">
-                Remain turn: 1
-              </Text>
-            </View>
-          </View>
-          <View style={tw`flex-row items-center gap-3`}>
+          <View style={tw`flex-row items-center gap-3 p-2 rounded-xl bg-green-100`}>
             <View style={tw`bg-blue-200 py-2 w-12 flex-row items-center justify-center rounded-lg`}>
               <Icon source="calendar-month" color={MD3Colors.primary20} size={30} />
             </View>

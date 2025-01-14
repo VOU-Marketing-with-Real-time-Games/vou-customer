@@ -2,6 +2,7 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { Text } from "react-native-paper";
 import { useSelector } from "react-redux";
+import LottieView from "lottie-react-native";
 import tw from "../../../lib/tailwind";
 import { IQuizRecevie } from "../../../types/socket";
 import { convertAnswerCharToInt, convertAnswerIntToChar } from "../../../utils/quiz";
@@ -101,6 +102,8 @@ const SingleQuiz = ({
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
   const user = useSelector((state: AppState) => state.user);
 
+  const [playing, setPlaying] = React.useState(false);
+
   const startTimer = () => {
     setIsRunning(true);
   };
@@ -162,6 +165,9 @@ const SingleQuiz = ({
     if (isRunning && timeLeft > 0) {
       intervalRef.current = setInterval(() => {
         setTimeLeft((prev) => {
+          // if (prev === duration) {
+          //   handlePlay(questions[currentQuestion].questionName);
+          // }
           if (prev <= 1) {
             clearInterval(intervalRef.current as NodeJS.Timeout);
             setIsRunning(false);
@@ -199,14 +205,22 @@ const SingleQuiz = ({
   return (
     <View style={tw`justify-center items-center my-2 p-0.5`}>
       {/* Heading (quiz number, countdown) */}
-      <View style={tw`flex-row w-full justify-between items-center gap-4 mb-8`}>
-        <Text style={tw`text-white`} variant="displayMedium">
+      <View style={tw`flex-row w-full justify-between items-center gap-4 mb-8 relative h-40`}>
+        {playing && (
+          <LottieView
+            source={require("../../../../assets/animations/face.json")}
+            autoPlay
+            loop
+            style={tw`absolute top-0 left-0 right-0 bottom-0`}
+          />
+        )}
+        <Text style={tw`text-white`} variant="displaySmall">
           Cau {currentQuestion + 1}
         </Text>
         {!isEndGame && (
-          <View>
+          <View style={tw`border-2 border-white rounded-full p-1`}>
             <Text style={tw`text-white`} variant="displaySmall">
-              {timeLeft}
+              {timeLeft < 10 ? `0${timeLeft}` : timeLeft}
             </Text>
           </View>
         )}

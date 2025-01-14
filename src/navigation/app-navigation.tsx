@@ -19,13 +19,16 @@ import { FlappyBirdGameScreenName, QuizGameScreenName, ShakeGameScreenName } fro
 import ShakeGameScreen from "../screens/game/shake-game-screen";
 import FlappyBirdGameScreen from "../screens/game/flappy-bird-game-screen";
 import QuizGameScreen from "../screens/game/quiz-game-screen";
-import { VoucherGiftScreenName } from "../screens/gift/gift";
+import { PuzzleGiftScreenName, VoucherGiftScreenName } from "../screens/gift/gift";
 import VoucherGiftScreen from "../screens/gift/voucher-gift-screen";
 import CampaignsScreen from "../screens/campaign/campaigns-screen";
 import { campaignsScreenName, FavoriteCampaignsScreenName } from "../screens/campaign/campain";
 import { NotifyScreenName } from "../screens/notify/notify";
 import NotifyScreen from "../screens/notify/notify-screen";
 import FavoriteCampaignsScreen from "../screens/campaign/favorite-campaigns-screen";
+import { PuzzleScreenName } from "../screens/puzzle/puzzle";
+import PuzzleScreen from "../screens/puzzle/puzzle-screen";
+import PuzzleGiftScreen from "../screens/gift/puzzle-gift-screen";
 
 const Stack = createNativeStackNavigator<NavigatorParamList>();
 
@@ -51,7 +54,7 @@ const StackNavigation = () => {
       <Stack.Screen options={options} name={MainNavigationName} component={MainNavigation} />
       <Stack.Screen
         options={({ route }) => ({
-          header: () => <Header title={route.params.header} canGoBack />,
+          header: () => <Header title="Campaign Detail" canGoBack />,
         })}
         name={VoucherDetailScreenName}
         component={VoucherDetailScreen}
@@ -80,6 +83,8 @@ const StackNavigation = () => {
       />
       {/* Gift */}
       <Stack.Screen options={options} name={VoucherGiftScreenName} component={VoucherGiftScreen} />
+      {/* puzzle collection */}
+      <Stack.Screen options={options} name={PuzzleGiftScreenName} component={PuzzleGiftScreen} />
       {/* Campaign */}
       <Stack.Screen
         options={({ route }) => ({
@@ -103,6 +108,14 @@ const StackNavigation = () => {
         })}
         name={FavoriteCampaignsScreenName}
         component={FavoriteCampaignsScreen}
+      />
+      {/* puzzle collection */}
+      <Stack.Screen
+        options={({ route }) => ({
+          header: () => <Header title="Puzzle Collection" canGoBack />,
+        })}
+        name={PuzzleScreenName}
+        component={PuzzleScreen}
       />
     </Stack.Navigator>
   );

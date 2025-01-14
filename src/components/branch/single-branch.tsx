@@ -14,7 +14,7 @@ type Props = {
 const SingleBranch = ({ branch }: Props) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   return (
-    <TouchableOpacity onPress={() => navigation.navigate(VoucherDetailScreenName, { header: "Voucher Detail" })}>
+    <TouchableOpacity onPress={() => {}}>
       <Surface style={tw`p-2 gap-6`}>
         <View style={tw`rounded-xl overflow-hidden`}>
           <Image

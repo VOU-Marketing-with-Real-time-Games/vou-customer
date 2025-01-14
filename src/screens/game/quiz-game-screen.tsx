@@ -6,6 +6,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { URL_QUIZ, WEBSOCKET_URL } from "@env";
 import { useSelector } from "react-redux";
+import { useMutation } from "@tanstack/react-query";
 import tw from "../../lib/tailwind";
 import SingleQuiz from "../../components/game/quiz/single-quiz";
 import MainLayout from "../../layouts/main/main-layout";
@@ -15,6 +16,8 @@ import LeaderBoard from "../../components/game/leader-board";
 import GameStarted from "../../components/game/game-started";
 import WaitingStartGame from "../../components/game/waiting-start-game";
 import { AppState } from "../../store";
+import { IIncreasePlayTurnReq } from "../../types/user";
+import { userApi } from "../../api/user.api";
 
 const QuizGameScreen = () => {
   const user = useSelector((state: AppState) => state.user);
@@ -38,6 +41,10 @@ const QuizGameScreen = () => {
 
   const showModal = () => setVisible(true);
 
+  const decreasePlayTurnMutation = useMutation({
+    mutationFn: (body: IIncreasePlayTurnReq) => userApi.decreasePlayTurn(body),
+  });
+
   React.useEffect(() => {
     gameStartedRef.current = gameStarted;
     quizDataRef.current = quizData;
@@ -47,6 +54,18 @@ const QuizGameScreen = () => {
   React.useEffect(() => {
     leaderBoardRef.current = leaderBoard;
   }, [leaderBoard]);
+
+  React.useEffect(() => {
+    if (showQuizScreen) {
+      // trừ lượt chơi đi 1
+      decreasePlayTurnMutation.mutate({
+        userID: user.userId!,
+        quantity: 1,
+        method: "describe",
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showQuizScreen]);
 
   // socket handlers
 

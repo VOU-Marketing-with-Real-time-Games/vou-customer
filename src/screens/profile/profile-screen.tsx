@@ -14,6 +14,8 @@ import { IFullUser } from "../../types/user";
 import { userApi } from "../../api/user.api";
 import { NotifyScreenName } from "../notify/notify";
 import { FavoriteCampaignsScreenName } from "../campaign/campain";
+import { VoucherScreenName } from "../voucher/voucher";
+import { PuzzleScreenName } from "../puzzle/puzzle";
 
 const ProfileScreen = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -73,13 +75,16 @@ const ProfileScreen = () => {
       <Divider />
       {/* collection */}
       <View style={tw`px-3 mt-8 mb-5 gap-6`}>
-        <TouchableOpacity style={tw`flex-row items-center gap-5`}>
+        <TouchableOpacity
+          style={tw`flex-row items-center gap-5`}
+          onPress={() => navigation.navigate(VoucherScreenName)}
+        >
           <Icon source="barcode" color={MD3Colors.primary20} size={28} />
           <Text variant="titleLarge" style={tw`flex-1 text-gray-600 font-medium`}>
             My Vouchers
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={tw`flex-row items-center gap-5`}>
+        <TouchableOpacity style={tw`flex-row items-center gap-5`} onPress={() => navigation.navigate(PuzzleScreenName)}>
           <Icon source="puzzle" color={MD3Colors.primary20} size={28} />
           <Text variant="titleLarge" style={tw`flex-1 text-gray-600 font-medium`}>
             Puzzle Collection

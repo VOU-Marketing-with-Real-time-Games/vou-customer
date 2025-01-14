@@ -7,10 +7,11 @@ import { VoucherDetailScreenName, VoucherScreenName } from "../screens/voucher/v
 import { LocationScreenName } from "../screens/location/location";
 import { ProfileScreenName } from "../screens/profile/profile";
 import { FlappyBirdGameScreenName, QuizGameScreenName, ShakeGameScreenName } from "../screens/game/game";
-import { VoucherGiftScreenName } from "../screens/gift/gift";
+import { PuzzleGiftScreenName, VoucherGiftScreenName } from "../screens/gift/gift";
 import { campaignsScreenName, FavoriteCampaignsScreenName } from "../screens/campaign/campain";
 import { ICampaign } from "../types/campaign";
 import { NotifyScreenName } from "../screens/notify/notify";
+import { PuzzleScreenName } from "../screens/puzzle/puzzle";
 
 export type NavigatorParamList = {
   // splash screen
@@ -47,10 +48,16 @@ export type NavigatorParamList = {
   [QuizGameScreenName]: undefined;
   // Gift v1/quizz-game
   [VoucherGiftScreenName]: undefined;
+  [PuzzleGiftScreenName]: {
+    puzzleId: number;
+    position: number;
+  };
   // Campaign
   [campaignsScreenName]: undefined;
   // notify
   [NotifyScreenName]: undefined;
   // favorite
   [FavoriteCampaignsScreenName]: undefined;
+  // puzzle
+  [PuzzleScreenName]: undefined;
 };

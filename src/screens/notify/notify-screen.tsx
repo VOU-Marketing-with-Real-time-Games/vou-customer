@@ -1,4 +1,5 @@
 import { ScrollView, View } from "react-native";
+import { Text } from "react-native-paper";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
@@ -33,6 +34,11 @@ const NotifyScreen = () => {
                 <SingleNotify notify={notify} />
               </View>
             ))}
+            {notifications?.length === 0 && (
+              <Text variant="displaySmall" style={tw`text-center text-red-500`}>
+                Không có thông báo nào
+              </Text>
+            )}
           </View>
         </ScrollView>
       )}
