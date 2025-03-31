@@ -31,15 +31,15 @@ const SingleCampain = ({ campaign, isHorizontal = false }: Props) => {
   const checkIsFavoriteQuery = useQuery({
     queryKey: ["check-is-favorite", campaign.id],
     queryFn: async () => {
-      const res: boolean = await campaignApi.checkIsFavorite(user.userId!, campaign.id);
+      const res: boolean = await campaignApi.checkIsFavorite(user.id!, campaign.id);
       setIsFavorite(res);
       return res;
     },
-    enabled: !!user.userId && !!campaign.id && !isHorizontal,
+    enabled: !!user.id && !!campaign.id && !isHorizontal,
   });
 
   const addToFavoriteQuery = useMutation({
-    mutationFn: () => campaignApi.addToFavorite(user.userId!, campaign.id),
+    mutationFn: () => campaignApi.addToFavorite(user.id!, campaign.id),
     onSuccess: () => {
       checkIsFavoriteQuery.refetch();
     },

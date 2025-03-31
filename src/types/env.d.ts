@@ -1,6 +1,5 @@
 declare module "@env" {
   export const API_URL: string;
-  export const WEBSOCKET_URL: string;
-  export const URL_QUIZ: string;
-  export const URL_NOTIFICATION: string;
+  export const QUIZ_GAME_SOCKET: string;
+  export const NOTIFICATION_SOCKET: string;
 }

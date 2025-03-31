@@ -16,7 +16,7 @@ const FavoriteCampaignsScreen = () => {
   const getCampaignsByName = useQuery({
     queryKey: ["list-favorite-campaign"],
     queryFn: async () => {
-      const response: ICampaign[] = await campaignApi.getAllFavorite(user.userId!);
+      const response: ICampaign[] = await campaignApi.getAllFavorite(user.id!);
       setFavorites(response);
       return response;
     },

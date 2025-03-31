@@ -23,12 +23,12 @@ const GroupButtonSharing = ({ campaign }: Props) => {
   const getPlayTurnQuery = useQuery({
     queryKey: ["play-turn"],
     queryFn: async () => {
-      const res = await userApi.getPlayTurn(user.userId!);
+      const res = await userApi.getPlayTurn(user.id!);
       setPlayTurn(res);
       return res;
     },
     gcTime: 0,
-    enabled: user.userId !== null,
+    enabled: user.id !== null,
   });
 
   const increasePlayTurnMutation = useMutation({
@@ -61,7 +61,7 @@ const GroupButtonSharing = ({ campaign }: Props) => {
           // shared with activity type of result.activityType
         } else {
           // shared => add turn increse turn
-          increasePlayTurnMutation.mutate({ userID: 15, method: "share", quantity: 1 });
+          increasePlayTurnMutation.mutate({ userID: user.id!, method: "share", quantity: 1 });
         }
       } else if (result.action === Share.dismissedAction) {
         // dismissed

@@ -61,7 +61,7 @@ const SignInScreen = () => {
         setUser({
           email: response.email,
           token,
-          userId: response.id,
+          id: response.id,
           username: response.userName || response.username || "",
           image: response.image || "https://avatar.iran.liara.run/public",
         }),

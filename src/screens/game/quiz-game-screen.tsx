@@ -4,7 +4,7 @@ import React from "react";
 import { Text, Modal, Portal, Button } from "react-native-paper";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
-import { URL_QUIZ, WEBSOCKET_URL } from "@env";
+import { QUIZ_GAME_SOCKET } from "@env";
 import { useSelector } from "react-redux";
 import { useMutation } from "@tanstack/react-query";
 import tw from "../../lib/tailwind";
@@ -19,7 +19,15 @@ import { AppState } from "../../store";
 import { IIncreasePlayTurnReq } from "../../types/user";
 import { userApi } from "../../api/user.api";
 
-const QuizGameScreen = () => {
+type RouteParams = {
+  params: {
+    quizzId: number;
+  };
+};
+
+const QuizGameScreen = ({ route }: { route: RouteParams }) => {
+  const { quizzId } = route.params;
+
   const user = useSelector((state: AppState) => state.user);
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const [isEndGame, setIsEndGame] = React.useState(false);
@@ -41,9 +49,9 @@ const QuizGameScreen = () => {
 
   const showModal = () => setVisible(true);
 
-  const decreasePlayTurnMutation = useMutation({
-    mutationFn: (body: IIncreasePlayTurnReq) => userApi.decreasePlayTurn(body),
-  });
+  // const decreasePlayTurnMutation = useMutation({
+  //   mutationFn: (body: IIncreasePlayTurnReq) => userApi.decreasePlayTurn(body),
+  // });
 
   React.useEffect(() => {
     gameStartedRef.current = gameStarted;
@@ -58,13 +66,12 @@ const QuizGameScreen = () => {
   React.useEffect(() => {
     if (showQuizScreen) {
       // trừ lượt chơi đi 1
-      decreasePlayTurnMutation.mutate({
-        userID: user.userId!,
-        quantity: 1,
-        method: "describe",
-      });
+      // decreasePlayTurnMutation.mutate({
+      //   userID: user.id!,
+      //   quantity: 1,
+      //   method: "describe",
+      // });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showQuizScreen]);
 
   // socket handlers
@@ -79,7 +86,7 @@ const QuizGameScreen = () => {
   };
 
   React.useEffect(() => {
-    const ws = new WebSocket(WEBSOCKET_URL + URL_QUIZ);
+    const ws = new WebSocket(QUIZ_GAME_SOCKET);
     wsRef.current = ws;
 
     ws.onopen = () => {
@@ -87,8 +94,8 @@ const QuizGameScreen = () => {
       console.log("Game WebSocket connection opened");
       connectQuizSocket({
         type: "CONNECT_QUIZ",
-        userId: user.userId?.toString() || "0",
-        quizzId: "1",
+        userId: user.id?.toString() || "0",
+        quizzId: quizzId.toString(),
       });
     };
 
@@ -162,8 +169,8 @@ const QuizGameScreen = () => {
     // send socket message, nguoi choi da hoan thanh cau nay va da gui dap an ve server
     sendAnswerComplete({
       type: "ANSWER_COMPLETE",
-      userId: user.userId?.toString() || "0",
-      quizzId: "1",
+      userId: user.id?.toString() || "0",
+      quizzId: quizzId.toString(),
     });
   };
 

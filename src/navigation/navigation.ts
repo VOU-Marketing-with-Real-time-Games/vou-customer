@@ -44,9 +44,13 @@ export type NavigatorParamList = {
   };
 
   // Game
-  [ShakeGameScreenName]: undefined;
+  [ShakeGameScreenName]: {
+    puzzleId: number;
+  };
   [FlappyBirdGameScreenName]: undefined;
-  [QuizGameScreenName]: undefined;
+  [QuizGameScreenName]: {
+    quizzId: number;
+  };
   // Gift v1/quizz-game
   [VoucherGiftScreenName]: undefined;
   [PuzzleGiftScreenName]: {

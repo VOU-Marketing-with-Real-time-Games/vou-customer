@@ -6,5 +6,5 @@ export type IBranch = {
   phone: string;
   status: string;
   longitude: number;
-  lattitude: number;
+  latitude: number;
 };

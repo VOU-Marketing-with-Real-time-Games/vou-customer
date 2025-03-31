@@ -6,7 +6,7 @@ import { userReducer } from "./reducer";
 const initialState: IUser = {
   email: null,
   token: null,
-  userId: null,
+  id: null,
   username: null,
   image: null,
 };

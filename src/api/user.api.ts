@@ -48,4 +48,9 @@ export const userApi = {
     const res = await AxiosClient.get(`${URL_USER}/${userId}/play-turn`);
     return res.data;
   },
+
+  searchByEmail: async (email: string) => {
+    const res = await AxiosClient.get(`${URL_USER}/search/${email}`);
+    return res.data;
+  },
 };

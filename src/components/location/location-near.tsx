@@ -8,9 +8,10 @@ const { width } = Dimensions.get("window");
 
 type Props = {
   location: IBranch;
+  distance: string | number;
 };
 
-const LocationNear = ({ location }: Props) => (
+const LocationNear = ({ location, distance }: Props) => (
   <View style={tw`rounded-lg bg-white pb-0.5`}>
     <Image
       source={{
@@ -27,7 +28,7 @@ const LocationNear = ({ location }: Props) => (
           <Text>{location.address}</Text>
           <View style={tw`flex-row items-center gap-1`}>
             <Icon source="map-marker" color={MD3Colors.error50} size={20} />
-            <Text>7.6 kilometers away</Text>
+            <Text>{distance} kilometers away</Text>
           </View>
         </View>
       </View>
@@ -35,7 +36,7 @@ const LocationNear = ({ location }: Props) => (
     <Button
       mode="outlined"
       onPress={() => {
-        const url = `https://www.google.com/maps/search/?api=1&query=${location.lattitude},${location.longitude}`;
+        const url = `https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}`;
         Linking.openURL(url);
       }}
     >

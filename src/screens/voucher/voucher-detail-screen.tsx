@@ -67,7 +67,7 @@ const VoucherDetailScreen = ({ route }: { route: RouteParams }) => {
               </Text>
             </View>
           </View>
-          <ButtonChooseGame />
+          <ButtonChooseGame campaignId={campaign.id} />
         </View>
       </View>
     </MainLayout>

@@ -25,9 +25,6 @@ const ListPopularBranch = () => {
         <Text variant="titleLarge" style={tw`font-bold`}>
           Popular Branch
         </Text>
-        <Button icon="arrow-right-thin" mode="text" contentStyle={tw`flex-row-reverse`}>
-          See all
-        </Button>
       </View>
       {getAllBranch.isLoading || getAllBranch.isFetching ? (
         <ListPopularBranch.Skeleton />

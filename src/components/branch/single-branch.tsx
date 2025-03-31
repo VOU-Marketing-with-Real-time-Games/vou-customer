@@ -21,7 +21,6 @@ const SingleBranch = ({ branch }: Props) => {
             source={{
               uri: "https://about.starbucks.com/uploads/2021/11/Starbucks-Virtual-Backgrounds-Holiday-Cups-2021-1024x683.jpg",
             }}
-            width={250}
             height={150}
             alt="Branch Image"
           />

@@ -23,7 +23,7 @@ const UserInfoHome = () => {
         source={require("../../../assets/animations/welcome.json")}
         autoPlay
         loop
-        style={tw`absolute -top-2 right-10 w-50 h-50`}
+        style={tw`absolute -top-1 right-10 w-50 h-50`}
       />
       <View style={tw`flex-row items-center gap-2`}>
         <Avatar.Image

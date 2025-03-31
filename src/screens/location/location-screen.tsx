@@ -18,6 +18,7 @@ import LocationNear from "../../components/location/location-near";
 import { ILocation } from "../../types/location";
 import { IBranch } from "../../types/branch";
 import branchApi from "../../api/branch.api";
+import { haversine } from "../../utils/distance";
 
 const styles = StyleSheet.create({
   container: {
@@ -49,6 +50,7 @@ const LocationScreen = () => {
     queryKey: ["list-branch"],
     queryFn: async () => {
       const response: IBranch[] = await branchApi.getAll();
+      console.log(response);
       setBranches(response);
       return response;
     },
@@ -63,7 +65,7 @@ const LocationScreen = () => {
     // Move map to selected marker
     mapRef.current?.animateToRegion(
       {
-        latitude: location.lattitude,
+        latitude: location.latitude,
         longitude: location.longitude,
         latitudeDelta: 0.01,
         longitudeDelta: 0.01,
@@ -132,7 +134,7 @@ const LocationScreen = () => {
                   key={location.id}
                   title={location.name}
                   description="This is a description"
-                  coordinate={{ latitude: location.lattitude, longitude: location.longitude }}
+                  coordinate={{ latitude: location.latitude, longitude: location.longitude }}
                   onPress={() => onMarkerPress(location, index)}
                 >
                   <Icon
@@ -155,7 +157,12 @@ const LocationScreen = () => {
                 {branches &&
                   branches.map((location, index) => (
                     <View key={`a-${index + 1}`}>
-                      <LocationNear location={location} />
+                      <LocationNear
+                        location={location}
+                        distance={
+                          haversine(location.latitude, location.longitude, position.latitude, position.longitude) || 10
+                        }
+                      />
                     </View>
                   ))}
               </View>

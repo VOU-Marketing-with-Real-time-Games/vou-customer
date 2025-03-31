@@ -18,7 +18,15 @@ import { PuzzleGiftScreenName } from "../gift/gift";
 const SHAKE_THRESHOLD = 4;
 const SHAKE_DURATION = 2000;
 
-const ShakeGameScreen = () => {
+type RouteParams = {
+  params: {
+    puzzleId: number;
+  };
+};
+
+const ShakeGameScreen = ({ route }: { route: RouteParams }) => {
+  const { puzzleId } = route.params;
+
   const [count, setCount] = React.useState(0);
   const [subscription, setSubscription] = React.useState<Subscription | null>(null);
   const [isShakingActive, setIsShakingActive] = React.useState(false);
@@ -41,12 +49,12 @@ const ShakeGameScreen = () => {
 
   // TODO: puzzleId
   const receiveRandomItem = useMutation({
-    mutationFn: () => puzzleApi.addRandomItem(user.userId!, 1),
+    mutationFn: () => puzzleApi.addRandomItem(user.id!, puzzleId),
     onSuccess: (data) => {
       // redirect to puzzle reward screen white position
       // TODO: puzzleId
       navigation.navigate(PuzzleGiftScreenName, {
-        puzzleId: 1,
+        puzzleId,
         position: data.position,
       });
     },
@@ -93,7 +101,7 @@ const ShakeGameScreen = () => {
     console.log("startShaking");
     if (!isShakingActive) {
       decreasePlayTurnMutation.mutate({
-        userID: user.userId!,
+        userID: user.id!,
         quantity: 1,
         method: "describe",
       });

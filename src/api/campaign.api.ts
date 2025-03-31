@@ -1,6 +1,7 @@
 import AxiosClient from "./axios";
 
 const URL_CAMPAIGN = "/campaigns";
+const URL_GAME_CAMPAIGN = "/game-campaigns";
 const URL_NEWEST = `${URL_CAMPAIGN}/latest`;
 
 const campaignApi = {
@@ -34,6 +35,11 @@ const campaignApi = {
       userId,
       campaignId,
     });
+    return res.data;
+  },
+
+  getListGame: async (campaignId: number) => {
+    const res = await AxiosClient.get(`${URL_GAME_CAMPAIGN}/campaign/${campaignId}`);
     return res.data;
   },
 };

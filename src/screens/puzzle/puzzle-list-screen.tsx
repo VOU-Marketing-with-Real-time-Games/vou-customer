@@ -1,4 +1,5 @@
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, View } from "react-native";
+import { Text } from "react-native-paper";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import puzzleApi from "../../api/puzzle.api";
@@ -30,6 +31,11 @@ const PuzzleListScreen = () => {
                 <SinglePuzzle puzzle={puzzle} />
               </View>
             ))}
+            {puzzles?.length === 0 && (
+              <Text variant="displaySmall" style={tw`text-center text-red-500`}>
+                Không có Puzzle được tạo
+              </Text>
+            )}
           </View>
         </ScrollView>
       )}
